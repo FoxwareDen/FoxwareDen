@@ -24,7 +24,18 @@ export default async (_req: Request, _context: Context): Promise<Response> => {
     });
   }
 
-  return new Response(JSON.stringify({ message: "everything's normal" }), {
-    status: 200,
-  });
+  const data = await res.json();
+
+  if (!data) {
+    return new Response(JSON.stringify({ message: "no data" }), {
+      status: 500,
+    });
+  }
+
+  return new Response(
+    JSON.stringify({ message: "everything's normal", ...data }),
+    {
+      status: 200,
+    }
+  );
 };

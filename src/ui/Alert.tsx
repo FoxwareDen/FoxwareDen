@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { X } from "lucide-react";
-import { useMemo } from "react";
 
 type Warning = "success" | "error" | "warning";
 

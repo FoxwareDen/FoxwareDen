@@ -2,20 +2,45 @@ import { Outlet } from "react-router";
 import Header from "./ui/Header";
 import Footer from "./ui/Footer";
 import { useEffect } from "react";
-import { heathCheck } from "./api/requests";
+import { getOrgMetaData, heathCheck } from "./api/requests";
 import { useAlert } from "./ui/Alert";
+import { useOrg } from "./store/orgHook";
 
 function RootLayout() {
   const { setAlert } = useAlert();
+  const { setData, setLoading, setError } = useOrg();
 
   useEffect(() => {
-    const fetchReq = async () => {
+    const fetchOrgData = async () => {
+      setLoading(true);
+      setError(null);
       const [error, message] = await heathCheck();
 
-      setAlert({ message, type: error ? "success" : "error" }, 15000);
+      if (error) {
+        setAlert({ message, type: "error" }, 10000);
+
+        return;
+      }
+
+      try {
+        const orgData = await getOrgMetaData();
+
+        setData(orgData);
+      } catch (error) {
+        setAlert(
+          {
+            message: "failed to retrieve org data from github api",
+            type: "error",
+          },
+          20000
+        );
+        setError("failed to retrieve org data from github api");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchReq();
+    fetchOrgData();
   }, []);
 
   return (
