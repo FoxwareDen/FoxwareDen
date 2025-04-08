@@ -1,6 +1,6 @@
 import type { Context } from "@netlify/functions";
 
-export default async (req: Request, context: Context): Promise<Response> => {
+export default async (req: Request, _context: Context): Promise<Response> => {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const querys = new URLSearchParams(req.url.split("?")[1]);
 
@@ -14,7 +14,6 @@ export default async (req: Request, context: Context): Promise<Response> => {
   }
 
   const url = querys.get("url");
-  const page = parseInt(querys.get("page") || "1", 10);
 
   if (!url) {
     return new Response("", {
@@ -23,26 +22,20 @@ export default async (req: Request, context: Context): Promise<Response> => {
     });
   }
 
-  const builtUrl = `${url}?page=${page}`;
-
-  const res = await fetch(builtUrl, {
+  const res = await fetch(url, {
     headers: { Authorization: `Bearer ${GITHUB_TOKEN}` },
   });
 
-  if (!res.ok) {
+  if (!res.ok)
     return new Response("", {
       status: 500,
-      statusText: "failed fetch request to github API",
+      statusText: "failed fetch request",
     });
-  }
 
   const data = await res.json();
 
-  return new Response(
-    JSON.stringify({ message: "everything's normal", repos: data }),
-    {
-      status: 200,
-      statusText: "success",
-    }
-  );
+  return new Response(JSON.stringify({ message: "", data }), {
+    statusText: "success",
+    status: 200,
+  });
 };
