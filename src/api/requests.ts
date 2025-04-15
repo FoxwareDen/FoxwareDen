@@ -54,7 +54,7 @@ export async function getOrgMetaData() {
   return response.json() as Promise<OrgMetaData & { message: string }>;
 }
 
-export type Owner = {
+export type User = {
   login: string;
   id: number;
   node_id: string;
@@ -82,7 +82,7 @@ export interface Repo {
   name: string;
   full_name: string;
   private: boolean;
-  owner: Owner;
+  User: User;
   html_url: string;
   description: string;
   fork: boolean;

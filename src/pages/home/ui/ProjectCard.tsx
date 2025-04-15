@@ -1,6 +1,7 @@
 import { Star, GitFork, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getWithAuth } from "../../../api/requests";
+import { useAlert } from "../../../ui/Alert";
 
 type User = {
   id: number;
@@ -20,6 +21,7 @@ export type ProjectCardProps = {
   color: string;
   // ops
   languages_url?: string;
+  contributors_url?: string;
 };
 
 export default function ProjectCard({
@@ -32,8 +34,8 @@ export default function ProjectCard({
   color,
   // ops
   contributors_url,
-  languages_url,
 }: ProjectCardProps) {
+  const { setAlert } = useAlert();
   const [colabs, setColabs] = useState<User[] | null>(null);
 
   useEffect(() => {
@@ -46,7 +48,10 @@ export default function ProjectCard({
         data: any[];
       }>(colabUrl);
 
-      if (!data) return;
+      if (!data || error) {
+        setAlert({ message: error, type: "error" });
+        return;
+      }
 
       const colabs = data.data;
 
@@ -78,7 +83,9 @@ export default function ProjectCard({
             <ExternalLink className="h-5 w-5" />
           </a>
         </div>
-        <p className="text-gray-700 dark:text-gray-300 mb-6">{description}</p>
+        <p className="h-max text-gray-700 dark:text-gray-300 mb-6">
+          {description}
+        </p>
         <div className="flex items-center justify-between">
           <div className="flex items-center overflow-x-auto">
             {/* users here */}

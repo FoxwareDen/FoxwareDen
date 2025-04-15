@@ -25,51 +25,39 @@ function ProjectsSection() {
   const [projects, setProjects] = useState<ProjectCardProps[] | null>(null);
 
   useEffect(() => {
-    /*************  ✨ Windsurf Command ⭐  *************/
-    /**
-     * Fetches the list of projects from the GitHub API.
-     * It first checks if the org data is available and if not, it does nothing.
-     * Then it sets the loading state to true, and the error state to null.
-     * It then calls the getRepos function to fetch the list of projects and logs the result to the console.
-     * If there is an error, it logs the error and sets the error state to a friendly message.
-     * Finally, it sets the loading state to false.
-     */
-    /*******  acd2c89f-ae48-4a6a-92a4-f32b69a1ed56  *******/ const fetchProjects =
-      async () => {
-        if (loading || !orgData) return;
-        try {
-          setProjectsLoading(true);
-          setProjectsError(null);
+    const fetchProjects = async () => {
+      if (loading || !orgData) return;
+      try {
+        setProjectsLoading(true);
+        setProjectsError(null);
 
-          let counter = 0;
-          const repos = (await getRepos(orgData.repos_url)).repos.map(
-            (repo) => {
-              counter + 1 == colors.length ? (counter = 0) : counter++;
-              const color = colors[counter];
+        let counter = 0;
+        const repos = (await getRepos(orgData.repos_url)).repos.map((repo) => {
+          counter + 1 == colors.length ? (counter = 0) : counter++;
+          const color = colors[counter];
 
-              return {
-                color,
-                title: repo.full_name,
-                description: repo.description,
-                forks: repo.forks,
-                language: repo.language,
-                stars: repo.stargazers_count,
-                url: repo.html_url,
-                // ops
-                contributors_url: repo.collaborators_url,
-                languages_url: repo.languages_url,
-              } as ProjectCardProps;
-            }
-          );
+          return {
+            color,
+            title: repo.full_name,
+            description: repo.description,
+            forks: repo.forks,
+            language: repo.language,
+            stars: repo.stargazers_count,
+            url: repo.html_url,
+            // ops
+            contributors_url: repo.collaborators_url,
+            languages_url: repo.languages_url,
+          } as ProjectCardProps;
+        });
 
-          setProjects(repos);
-        } catch (error) {
-          console.log(error);
-          setProjectsError(`Failed to get projects list: ${error}`);
-        } finally {
-          setProjectsLoading(false);
-        }
-      };
+        setProjects(repos);
+      } catch (error) {
+        console.error(error);
+        setProjectsError(`Failed to get projects list: ${error}`);
+      } finally {
+        setProjectsLoading(false);
+      }
+    };
 
     fetchProjects();
   }, [orgData, loading]);
