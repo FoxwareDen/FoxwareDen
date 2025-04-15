@@ -1,5 +1,3 @@
-import { ChevronRight } from "lucide-react";
-import { Link } from "react-router";
 import MemberCard from "./MemberCard";
 import { useEffect, useState } from "react";
 import { useOrg } from "../../../store/orgHook";

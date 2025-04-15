@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GitFork, Menu, X } from "lucide-react";
+import { GitFork, Menu, User2, X } from "lucide-react";
 import { Link } from "react-router";
 import Alert from "./Alert";
 import { useOrg } from "../store/orgHook";
@@ -63,6 +63,14 @@ function Header() {
               target="_blank"
             >
               <GitFork className="h-5 w-5" />
+            </a>
+          </button>
+          <button className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/in/christopher-vos-6469b7284/"
+            >
+              <User2 className="h-5 w-5" />
             </a>
           </button>
         </div>
