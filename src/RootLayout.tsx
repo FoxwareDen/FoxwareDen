@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { getOrgMetaData, heathCheck } from "./api/requests";
 import { useAlert } from "./ui/Alert";
 import { useOrg } from "./store/orgHook";
+import { ThemeProvider } from "./lib/ThemeProvider";
 
 function RootLayout() {
   const { setAlert } = useAlert();
@@ -44,11 +45,13 @@ function RootLayout() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black dark:text-white">
-      <Header />
-      <Outlet />
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen bg-white dark:bg-black dark:text-white">
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
 export default RootLayout;

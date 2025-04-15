@@ -3,6 +3,7 @@ import { GitFork, Menu, User2, X } from "lucide-react";
 import { Link } from "react-router";
 import Alert from "./Alert";
 import { useOrg } from "../store/orgHook";
+import ThemeToggle from "./ThemeToggle";
 
 function Header() {
   const { orgData, loading } = useOrg();
@@ -54,7 +55,7 @@ function Header() {
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
-          {/* <ThemeToggle /> */}
+          <ThemeToggle />
           <button className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
             <a
               href={
@@ -134,7 +135,7 @@ function Header() {
                 </Link> */}
               </nav>
               <div className="mt-auto border-t-4 border-black dark:border-white p-6 flex flex-col space-y-4">
-                {/* TODO: <ThemeToggle /> */}
+                <ThemeToggle />
                 <a
                   href={
                     orgData ? orgData.html_url : "https://github.com/FoxwareDen"
