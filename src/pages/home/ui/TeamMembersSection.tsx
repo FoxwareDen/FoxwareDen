@@ -49,8 +49,6 @@ function TeamMembersSection() {
           } as TeamMembers;
         });
 
-        console.log(members);
-
         setTeamMembers(members);
       } catch (error) {
         console.error(error);

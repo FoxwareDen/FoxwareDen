@@ -12,12 +12,16 @@ function Footer() {
             </p>
           </div>
           <div className="flex space-x-4">
-            <button className="h-12 w-12 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
-              <GitFork className="h-6 w-6" />
-            </button>
-            <button className="h-12 w-12 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
-              <ExternalLink className="h-6 w-6" />
-            </button>
+            <a href="https://github.com/orgs/FoxwareDen/">
+              <button className="h-12 w-12 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
+                <GitFork className="h-6 w-6" />
+              </button>
+            </a>
+            <a href="https://www.linkedin.com/in/christopher-vos-6469b7284/">
+              <button className="h-12 w-12 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
+                <ExternalLink className="h-6 w-6" />
+              </button>
+            </a>
           </div>
         </div>
         <div className="h-0.5 w-full bg-black dark:bg-white mb-8"></div>
