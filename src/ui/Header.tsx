@@ -95,7 +95,6 @@ function Header() {
                 </Link> */}
               </nav>
               <div className="mt-auto border-t-4 border-black dark:border-white p-6 flex flex-col space-y-4">
-                <ThemeToggle />
                 <a
                   href={
                     orgData ? orgData.html_url : "https://github.com/FoxwareDen"
@@ -104,9 +103,20 @@ function Header() {
                 >
                   <button className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2">
                     <GitFork className="h-5 w-5" />
-                    GitFork
+                    GitHub Repo
                   </button>
                 </a>
+                <button className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2">
+                  <ThemeToggle className="border-0" />
+                  Toggle Theme
+                </button>
+
+                <button className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2">
+                  <Link className="flex gap-2" to="/login">
+                    <User2 className="h-5 w-5" />
+                    Login / Sign Up
+                  </Link>
+                </button>
               </div>
             </div>
           </div>

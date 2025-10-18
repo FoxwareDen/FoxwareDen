@@ -6,10 +6,12 @@ import { getOrgMetaData, heathCheck } from "./api/requests";
 import { useAlert } from "./ui/Alert";
 import { useOrg } from "./store/orgHook";
 import { ThemeProvider } from "./lib/ThemeProvider";
+import { useUserSession } from "./store/auth";
 
 function RootLayout() {
-  const { setAlert } = useAlert();
+  const { session, setSession } = useUserSession();
   const { setData, setLoading, setError } = useOrg();
+  const { setAlert } = useAlert();
 
   useEffect(() => {
     const fetchOrgData = async () => {
@@ -27,7 +29,7 @@ function RootLayout() {
         const orgData = await getOrgMetaData();
 
         setData(orgData);
-      } catch (error) {
+      } catch {
         setAlert(
           {
             message: "failed to retrieve org data from github api",
@@ -42,7 +44,21 @@ function RootLayout() {
     };
 
     fetchOrgData();
-  }, []);
+  }, [setAlert, setLoading, setData, setError]);
+
+  useEffect(() => {
+    if (session) {
+      localStorage.setItem("session", JSON.stringify(session));
+    } else {
+      const session = localStorage.getItem("session");
+      if (session) {
+        const parsedSession = JSON.parse(session);
+        if (parsedSession) {
+          setSession(parsedSession);
+        }
+      }
+    }
+  }, [session, setSession]);
 
   return (
     <ThemeProvider>

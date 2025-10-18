@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, Session, User } from "@supabase/supabase-js";
 
 export const db = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -18,7 +18,10 @@ export async function getAllowedList(): Promise<string[] | null> {
   }
 }
 
-export async function signInWithEmail(email: string, password: string) {
+export async function signInWithEmail(
+  email: string,
+  password: string
+): Promise<{ user: User; session: Session } | null> {
   try {
     const allowedUser = await getAllowedList();
 
@@ -26,7 +29,7 @@ export async function signInWithEmail(email: string, password: string) {
     if (!allowedUser.includes(email)) throw new Error("Not allowed user");
 
     // Try to sign in first
-    const { error: signInError } = await db.auth.signInWithPassword({
+    const { data, error: signInError } = await db.auth.signInWithPassword({
       email,
       password,
     });
@@ -34,21 +37,24 @@ export async function signInWithEmail(email: string, password: string) {
     if (signInError) throw signInError;
 
     // Signed in successfully
-    return true;
+    return data;
   } catch (er) {
     console.error("Failed to sign in:", er);
-    return false;
+    return null;
   }
 }
 
-export async function signUpWithEmail(email: string, password: string) {
+export async function signUpWithEmail(
+  email: string,
+  password: string
+): Promise<{ user: User | null; session: Session | null } | null> {
   try {
     const allowedUser = await getAllowedList();
 
     if (!allowedUser) throw new Error("Failed to get allowed list");
     if (!allowedUser.includes(email)) throw new Error("Not allowed user");
 
-    const { error: signUpError } = await db.auth.signUp({
+    const { data, error: signUpError } = await db.auth.signUp({
       email,
       password,
     });
@@ -56,9 +62,9 @@ export async function signUpWithEmail(email: string, password: string) {
     if (signUpError) throw signUpError;
 
     // Signed up successfully
-    return true;
+    return data;
   } catch (er) {
     console.error("Failed to  sign up", er);
-    return false;
+    return null;
   }
 }

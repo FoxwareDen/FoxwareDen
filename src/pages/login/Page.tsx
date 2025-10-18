@@ -5,8 +5,11 @@ import { Link, useNavigate } from "react-router";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { getAllowedList, signInWithEmail, signUpWithEmail } from "../../api/db";
 import BrutalistSwitch from "../../ui/Switch";
+import { Session, User } from "@supabase/supabase-js";
+import { useUserSession } from "../../store/auth";
 
 function LoginPage() {
+  const { setSession } = useUserSession();
   const [mode, setMode] = useState<"signIn" | "signUp">("signIn");
   const navigate = useNavigate();
   const [allowedEmails, setAllowedEmails] = useState<string[]>([]);
@@ -30,16 +33,21 @@ function LoginPage() {
     e.preventDefault();
     console.log("Email login:", { email, password });
     // Handle email login logic here
-    let success = false;
+    let success: { user: User | null; session: Session | null } | null = null;
     if (mode == "signIn") {
       success = await signInWithEmail(email, password);
     } else {
       success = await signUpWithEmail(email, password);
     }
+    if (!success) return;
 
-    if (success) {
-      navigate("/dashboard");
-    }
+    const { session } = success;
+
+    if (!session) return;
+
+    setSession(session);
+
+    navigate("/dashboard");
   };
 
   // const handleGoogleLogin = () => {
