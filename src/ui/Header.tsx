@@ -17,43 +17,6 @@ function Header() {
           {orgData && !loading ? orgData.name : "Foxware-Den"}
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {/* 
-          <Link
-            to="#"
-            className="font-medium hover:underline underline-offset-4"
-          >
-            Projects
-          </Link>
-            TODO: add backend to manage later
-          <Link
-            to="#"
-            className="font-medium hover:underline underline-offset-4"
-          >
-            Members
-          </Link> 
-          <Link
-            to="#"
-            className="font-medium hover:underline underline-offset-4"
-          >
-            About
-          </Link>
-                TODO: add backend to manage later
-            <Link
-            to="#"
-            className="font-medium hover:underline underline-offset-4"
-          >
-            Blog
-          </Link>
-          <Link
-            to="#"
-            className="font-medium hover:underline underline-offset-4"
-          >
-            Contact
-          </Link> */}
-        </nav>
-
         <div className="hidden md:flex items-center space-x-4">
           <ThemeToggle />
           <button className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
@@ -67,12 +30,9 @@ function Header() {
             </a>
           </button>
           <button className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
-            <a
-              target="_blank"
-              href="https://www.linkedin.com/in/christopher-vos-6469b7284/"
-            >
+            <Link to="/login">
               <User2 className="h-5 w-5" />
-            </a>
+            </Link>
           </button>
         </div>
 
