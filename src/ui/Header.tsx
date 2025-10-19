@@ -1,15 +1,50 @@
-import { useState } from "react";
-import { GitFork, Menu, User2, X } from "lucide-react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+// notepad - text;
+import {
+  GitFork,
+  NotepadTextIcon,
+  LogOutIcon,
+  Menu,
+  User2,
+  X,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router";
 import Alert from "./Alert";
 import { useOrg } from "../store/orgHook";
 import ThemeToggle from "./ThemeToggle";
 import { useUserSession } from "../store/auth";
+import { signOutUser } from "../api/db";
 
 function Header() {
+  const navigate = useNavigate();
   const { orgData, loading } = useOrg();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { session } = useUserSession();
+  const { session, setSession } = useUserSession();
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    if (session) {
+      setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+  }, [session]);
+
+  const handleClickButton = async () => {
+    if (authenticated) {
+      navigate("/Dashboard");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const signOut = async () => {
+    const res = await signOutUser();
+    if (res) {
+      setSession(null);
+      navigate("/");
+    }
+  };
 
   return (
     <header className="fixed w-full z-50 bg-white dark:bg-black dark:text-white border-b-4 border-black dark:border-white">
@@ -31,11 +66,24 @@ function Header() {
               <GitFork className="h-5 w-5" />
             </a>
           </button>
-          <button className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
-            <Link to="/login">
+          <button
+            className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center"
+            onClick={handleClickButton}
+          >
+            {authenticated ? (
+              <NotepadTextIcon className="h-5 w-5" />
+            ) : (
               <User2 className="h-5 w-5" />
-            </Link>
+            )}
           </button>
+          {authenticated && (
+            <button
+              className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center"
+              onClick={signOut}
+            >
+              <LogOutIcon />
+            </button>
+          )}
         </div>
 
         {/* Mobile Navigation */}
@@ -113,12 +161,31 @@ function Header() {
                   Toggle Theme
                 </button>
 
-                <button className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2">
-                  <Link className="flex gap-2" to="/login">
-                    <User2 className="h-5 w-5" />
-                    Login / Sign Up
-                  </Link>
+                <button
+                  className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
+                  onClick={handleClickButton}
+                >
+                  {authenticated ? (
+                    <>
+                      <NotepadTextIcon className="h-5 w-5" />
+                      Dashboard
+                    </>
+                  ) : (
+                    <>
+                      <User2 className="h-5 w-5" />
+                      Login / Sign Up
+                    </>
+                  )}
                 </button>
+                {authenticated && (
+                  <button
+                    className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
+                    onClick={signOut}
+                  >
+                    <LogOutIcon />
+                    Logout
+                  </button>
+                )}
               </div>
             </div>
           </div>

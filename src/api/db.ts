@@ -68,3 +68,20 @@ export async function signUpWithEmail(
     return null;
   }
 }
+
+export async function signOutUser() {
+  try {
+    const { error } = await db.auth.signOut();
+
+    if (error) {
+      throw error;
+    }
+
+    console.log(await db.auth.getSession());
+
+    return true;
+  } catch (error) {
+    console.error("Failed to sign out:", error);
+    return false;
+  }
+}
