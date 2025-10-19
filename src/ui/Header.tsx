@@ -4,10 +4,12 @@ import { Link } from "react-router";
 import Alert from "./Alert";
 import { useOrg } from "../store/orgHook";
 import ThemeToggle from "./ThemeToggle";
+import { useUserSession } from "../store/auth";
 
 function Header() {
   const { orgData, loading } = useOrg();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { session } = useUserSession();
 
   return (
     <header className="fixed w-full z-50 bg-white dark:bg-black dark:text-white border-b-4 border-black dark:border-white">
