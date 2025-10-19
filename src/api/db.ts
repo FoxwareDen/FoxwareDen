@@ -61,7 +61,8 @@ export async function signUpWithEmail(
 
     if (signUpError) throw signUpError;
 
-    // Signed up successfully
+    if (data.user) await createUserData(data.user.id);
+
     return data;
   } catch (er) {
     console.error("Failed to  sign up", er);
@@ -82,6 +83,27 @@ export async function signOutUser() {
     return true;
   } catch (error) {
     console.error("Failed to sign out:", error);
+    return false;
+  }
+}
+
+export interface UserData {
+  user_id: string;
+  role: string;
+}
+
+export async function createUserData(user_id: string) {
+  try {
+    const { error } = await db.from("user_data").insert({
+      user_id,
+      role: "new-user",
+    });
+
+    if (error) throw error;
+
+    return true;
+  } catch (error) {
+    console.error(error);
     return false;
   }
 }
