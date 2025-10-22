@@ -25,13 +25,8 @@ function LoginPage() {
     })();
   }, []);
 
-  useEffect(() => {
-    if (allowedEmails.includes(email)) alert("yay");
-  }, [email, allowedEmails]);
-
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Email login:", { email, password });
     // Handle email login logic here
     let success: { user: User | null; session: Session | null } | null = null;
     if (mode == "signIn") {
