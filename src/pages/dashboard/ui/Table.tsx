@@ -1,56 +1,38 @@
 import { Edit, Plus, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getRepos, Repo } from "../../../api/dashboard";
+import { MetaData } from "../../../api/db";
 
-interface Project {
-  id: number;
-  name: string;
-  status: "active" | "inactive" | "pending";
-  contributors: number;
-  lastUpdated: string;
-}
+
+interface Project extends Repo,MetaData {}
 
 function Table() {
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: 1,
-      name: "DataSync",
-      status: "active",
-      contributors: 12,
-      lastUpdated: "2024-01-15",
-    },
-    {
-      id: 2,
-      name: "StaticGen",
-      status: "active",
-      contributors: 8,
-      lastUpdated: "2024-01-14",
-    },
-    {
-      id: 3,
-      name: "AuthKit",
-      status: "pending",
-      contributors: 15,
-      lastUpdated: "2024-01-13",
-    },
-    {
-      id: 4,
-      name: "QueryBuilder",
-      status: "active",
-      contributors: 6,
-      lastUpdated: "2024-01-12",
-    },
-    {
-      id: 5,
-      name: "UIFramework",
-      status: "inactive",
-      contributors: 20,
-      lastUpdated: "2024-01-10",
-    },
-  ]);
+  const [loading,setLoading] = useState(false);
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  const handleDelete = (id: number) => {
-    setProjects(projects.filter((p) => p.id !== id));
-  };
+
+  useEffect(()=>{
+    const fetchRepos = async () => {
+      try {
+        setLoading(true)
+
+        const result = await getRepos();
+
+        if (!result) {
+          setLoading(false)
+          return
+        }
+
+        setProjects(result as Project[])
+      } catch (error) {
+        console.error(error);
+      }finally {
+        setLoading(false)
+      }
+    }
+
+    fetchRepos();
+  },[])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -69,10 +51,10 @@ function Table() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold font-mono">ALL PROJECTS</h2>
-        <button className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white flex items-center gap-2">
+        {/* <button className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white flex items-center gap-2">
           <Plus className="h-4 w-4" />
           ADD PROJECT
-        </button>
+        </button> */}
       </div>
 
       {/* Table */}
@@ -89,9 +71,9 @@ function Table() {
               <th className="px-4 py-3 text-left font-mono font-bold border-r-2 border-white dark:border-black">
                 CONTRIBUTORS
               </th>
-              <th className="px-4 py-3 text-left font-mono font-bold border-r-2 border-white dark:border-black">
+              {/* <th className="px-4 py-3 text-left font-mono font-bold border-r-2 border-white dark:border-black">
                 LAST UPDATED
-              </th>
+              </th> */}
               <th className="px-4 py-3 text-left font-mono font-bold">
                 ACTIONS
               </th>
@@ -108,7 +90,7 @@ function Table() {
                 } border-t-2 border-black dark:border-white`}
               >
                 <td className="px-4 py-3 font-mono font-bold border-r-2 border-black dark:border-white">
-                  {project.name}
+                  {project.title}
                 </td>
                 <td className="px-4 py-3 border-r-2 border-black dark:border-white">
                   <span
@@ -122,16 +104,16 @@ function Table() {
                 <td className="px-4 py-3 font-mono border-r-2 border-black dark:border-white">
                   {project.contributors}
                 </td>
-                <td className="px-4 py-3 font-mono border-r-2 border-black dark:border-white">
-                  {project.lastUpdated}
-                </td>
+                {/* <td className="px-4 py-3 font-mono border-r-2 border-black dark:border-white">
+                  {project.``}
+                </td> */}
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
                     <button className="p-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
-                      onClick={() => handleDelete(project.id)}
+                      // onClick={() => handleDelete(project.id)}
                       className="p-2 border-2 border-black dark:border-white hover:bg-[#FF5252] hover:text-black hover:border-black transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />

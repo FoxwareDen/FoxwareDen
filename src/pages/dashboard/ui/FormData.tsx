@@ -1,32 +1,41 @@
 import React, { useState } from "react";
 import BrutalistSwitch from "../../../ui/Switch";
+import { createRepo, Repo, Status } from "../../../api/dashboard";
 
 function FormData() {
+  const [loading, setLoading]= useState(false)
   // Form state
-  const [formData, setFormData] = useState({
-    projectName: "",
+  const [formData, setFormData] = useState<Repo>({
+    contributors: 0,
     description: "",
-    repository: "",
-    language: "",
-    license: "MIT",
-    isPublic: true,
-    hasDocumentation: false,
+    repository_url:"",
+    status:"pending",
+    title: "",
+    public:false
   });
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Reset form
-    setFormData({
-      projectName: "",
-      description: "",
-      repository: "",
-      language: "",
-      license: "MIT",
-      isPublic: true,
-      hasDocumentation: false,
-    });
-    alert("Project created successfully!");
+    
+    try {
+      setLoading(true)
+
+      createRepo(formData)
+
+      setFormData({
+        contributors: 0,
+        description: "",
+        public: false,
+        repository_url:"",
+        status:"active",
+        title:""
+      })
+      setLoading(false);  
+    } catch (error) {
+      
+    }finally {
+      setLoading(false)
+    }
   };
 
   return (
@@ -45,11 +54,11 @@ function FormData() {
           <input
             type="text"
             id="projectName"
-            value={formData.projectName}
+            value={formData.title}
             onChange={(e) =>
               setFormData({
                 ...formData,
-                projectName: e.target.value,
+                title: e.target.value,
               })
             }
             className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
@@ -92,9 +101,9 @@ function FormData() {
           <input
             type="url"
             id="repository"
-            value={formData.repository}
+            value={formData.repository_url}
             onChange={(e) =>
-              setFormData({ ...formData, repository: e.target.value })
+              setFormData({ ...formData, repository_url: e.target.value })
             }
             className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
             placeholder="https://github.com/username/repo"
@@ -104,7 +113,7 @@ function FormData() {
 
         {/* Language & License */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          {/* <div>
             <label
               htmlFor="language"
               className="block font-mono font-bold mb-2"
@@ -127,9 +136,9 @@ function FormData() {
               <option value="Rust">Rust</option>
               <option value="Go">Go</option>
             </select>
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <label htmlFor="license" className="block font-mono font-bold mb-2">
               LICENSE *
             </label>
@@ -147,36 +156,49 @@ function FormData() {
               <option value="GPL-3.0">GPL 3.0</option>
               <option value="BSD-3-Clause">BSD 3-Clause</option>
             </select>
-          </div>
+          </div> */}
         </div>
 
         {/* Switches */}
         <div className="space-y-4 border-2 border-black dark:border-white p-4">
+          <div>
+            <label htmlFor="license" className="block font-mono font-bold mb-2">
+              Statius *
+            </label>
+            <select
+              id="license"
+              value={formData.status}
+              onChange={(e) =>
+                setFormData({ ...formData, status: e.target.value as Status | "pending" })
+              }
+              className="w-full px-4 py-3 border-2 border-black dark:border-white bg-white dark:bg-black focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+              required
+            >
+              <option value="active">active</option>
+              <option value="inactive">inactive</option>
+              <option value="pending">pending</option>
+            </select>
+          </div> 
           <BrutalistSwitch
-            checked={formData.isPublic}
+            checked={formData.public}
             onCheckedChange={(checked) =>
-              setFormData({ ...formData, isPublic: checked })
+              setFormData({ ...formData, public: checked })
             }
+            className={`${formData.public ? "border-2 border-green-500 bg-green-500 dark:border-green-500 dark:bg-green-500":  "border-2 border-red-500 bg-red-500 dark:border-red-500 dark:bg-red-500"}`}
             label="PUBLIC REPOSITORY"
-          />
-          <BrutalistSwitch
-            checked={formData.hasDocumentation}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, hasDocumentation: checked })
-            }
-            label="HAS DOCUMENTATION"
           />
         </div>
 
         {/* Submit Buttons */}
         <div className="flex gap-4">
           <button
+            disabled={loading}
             type="submit"
             className="flex-1 py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white"
           >
             CREATE PROJECT
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={() =>
               setFormData({
@@ -192,7 +214,7 @@ function FormData() {
             className="px-6 py-3 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors font-mono font-bold"
           >
             RESET
-          </button>
+          </button> */}
         </div>
       </form>
     </div>

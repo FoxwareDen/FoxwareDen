@@ -1,29 +1,33 @@
-import { db } from "./db";
+import { db, MetaData } from "./db";
+
+export type Status =  "active" | "inactive" | "pending"
 
 export interface Repo {
-  download_url: string;
-  status: "active" | "inactive" | "pending";
+  repository_url: string;
+  status: Status;
   contributors: number;
   description: string;
   title: string;
+  public: boolean
 }
 
-export async function getRepos(): Promise<Repo[] | null> {
+export async function getRepos(): Promise<(Repo & MetaData)[] | null> {
   try {
     const { data, error } = await db.from("repos").select("*");
 
     if (error) throw error;
 
-    return data;
+    return data as (Repo & MetaData)[];
   } catch (er) {
     console.error("failed to get repos:", er);
     return null;
   }
 }
 
-export async function getRepo(id: string) {
+
+export async function getRepo(id: string): Promise<Repo & MetaData|null> {
   try {
-    const { data, error } = await db.from("repos").select("*").eq("id", id);
+    const { data, error } = await db.from("repos").select("*").eq("id", id).single();
 
     if (error) throw error;
 
@@ -34,18 +38,12 @@ export async function getRepo(id: string) {
   }
 }
 
-export async function crateRepo(
-  title: string,
-  description: string,
-  download_url: string,
-  status: "active" | "inactive" | "pending"
+export async function createRepo(
+  newData: Repo
 ) {
   try {
     const { data, error } = await db.from("repos").insert({
-      title,
-      description,
-      download_url,
-      status,
+      ...newData
     });
 
     if (error) throw error;
@@ -57,28 +55,28 @@ export async function crateRepo(
   }
 }
 
-export async function updateRepo(
-  id: string,
-  data: {
-    title: string | null;
-    description: string | null;
-    download_url: string | null;
-    status: "active" | "inactive" | "pending" | null;
-  }
-) {
-  let repo = await getRepo(id);
+// export async function updateRepo(
+//   id: string,
+//   data: {
+//     title: string | null;
+//     description: string | null;
+//     repository_url: string | null;
+//     status: "active" | "inactive" | "pending" | null;
+//   }
+// ) {
+//   let repo = await getRepo(id);
 
-  if (!repo) return null;
+//   if (!repo) return null;
 
-  repo = {
-    ...repo,
-    ...data,
-  };
+//   repo = {
+//     ...repo,
+//     ...data,
+//   };
 
-  return null;
-}
+//   return null;
+// }
 // TODO: implement a fetch to the netlify edge function that will have access to the GITHUB_RELEASE_TOKEN
-// export async function downloadRelease(id: string, download_url: string) {
+// export async function downloadRelease(id: string, repository_urlrl: string) {
 // try {
 //   } catch (error) {
 //     console.error(error);
