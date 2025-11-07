@@ -5,6 +5,11 @@ export const db = createClient(
   import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
 );
 
+export interface MetaData {
+  id: number,
+  created_at: string
+}
+
 export async function getAllowedList(): Promise<string[] | null> {
   try {
     const { data, error } = await db.from("allow_list").select("*");

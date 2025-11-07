@@ -8,6 +8,7 @@ interface BrutalistSwitchProps {
   label?: string;
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
+  className?:string
 }
 
 export default function BrutalistSwitch({
@@ -16,6 +17,7 @@ export default function BrutalistSwitch({
   label,
   disabled = false,
   size = "md",
+  className
 }: BrutalistSwitchProps) {
   const [internalChecked, setInternalChecked] = useState(false);
 
@@ -70,6 +72,7 @@ export default function BrutalistSwitch({
           transition-colors duration-200
           ${checked ? "bg-black dark:bg-white" : "bg-white dark:bg-black"}
           ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
+          ${className}
         `}
       >
         {/* Handle */}
