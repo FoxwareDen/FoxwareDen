@@ -9,6 +9,8 @@ import { Session, User } from "@supabase/supabase-js";
 import { useUserSession } from "../../store/auth";
 
 function LoginPage() {
+  const [signUpText, setSignUpText] = useState<string|null>(null);
+  const [loading, setLoading] = useState(false);
   const { setSession } = useUserSession();
   const [mode, setMode] = useState<"signIn" | "signUp">("signIn");
   const navigate = useNavigate();
@@ -19,36 +21,49 @@ function LoginPage() {
 
   useEffect(() => {
     (async () => {
-      const emails = await getAllowedList();
-      if (!emails) return;
-      setAllowedEmails(emails);
+      try {
+        setLoading(true)
+        const emails = await getAllowedList();
+        if (!emails) return;
+        setAllowedEmails(emails);
+      } catch (error) {
+        console.error(error);
+      }finally{
+        setLoading(false)
+      }
     })();
   }, []);
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true)
     // Handle email login logic here
     let success: { user: User | null; session: Session | null } | null = null;
-    if (mode == "signIn") {
+
+    try {
+      if (mode == "signIn") {
       success = await signInWithEmail(email, password);
     } else {
       success = await signUpWithEmail(email, password);
+      setSignUpText("A Confermation link was sent to your email")
+      return;
     }
+    } catch (error) {
+     console.error(error);
+    }
+
     if (!success) return;
 
     const { session } = success;
 
     if (!session) return;
 
+    setLoading(false)
+
     setSession(session);
 
     navigate("/dashboard");
   };
-
-  // const handleGoogleLogin = () => {
-  //   console.log("Google login");
-  //   // Handle Google login logic here
-  // };
 
   return (
     <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center p-4 relative overflow-hidden">
@@ -71,6 +86,11 @@ function LoginPage() {
             {/* Email Login Form */}
             <form onSubmit={handleEmailLogin} className="space-y-6">
               {/* Email Field */}
+              {
+                signUpText && (
+                    <h2 className="text-2xl font-bold font-mono mb-2">{signUpText}</h2>
+                )
+              }
               <div>
                 <label
                   htmlFor="email"
@@ -130,8 +150,9 @@ function LoginPage() {
 
               {/* Submit Button */}
               <button
+              disabled={loading}
                 type="submit"
-                className="w-full py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white"
+                className={`w-full py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white ${loading && "opacity-50"}`}
               >
                 {mode === "signIn" ? "SIGN IN" : "SIGN UP"}
               </button>
@@ -143,6 +164,7 @@ function LoginPage() {
                   Switch to {mode === "signIn" ? "signUp" : "signIn"}
                 </label>
                 <BrutalistSwitch
+                  disabled={loading}
                   checked={mode === "signUp"}
                   onCheckedChange={() => {
                     setMode((prev) => (prev == "signIn" ? "signUp" : "signIn"));
