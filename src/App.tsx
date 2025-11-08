@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router";
 import RootLayout from "./RootLayout";
 import Home from "./pages/home/Page";
-import NotFound from "./pages/404/Page";
 import LoginPage from "./pages/login/Page";
 import DashboardPage from "./pages/dashboard/Page";
 import ProtectedRoute from "./ProtectedRoute";
+import Products from "./pages/products/Page";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Products />} />
       </Route>
     </Routes>
   );
