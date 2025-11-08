@@ -14,6 +14,7 @@ import { useOrg } from "../store/orgHook";
 import ThemeToggle from "./ThemeToggle";
 import { useUserSession } from "../store/auth";
 import { signOutUser } from "../api/db";
+import DropdownProps from "./DropDown";
 
 function Header() {
   const navigate = useNavigate();
@@ -53,6 +54,16 @@ function Header() {
         <Link to="/" className="font-bold text-2xl font-mono">
           {orgData && !loading ? orgData.name : "Foxware-Den"}
         </Link>
+
+         <nav className="hidden md:flex items-center space-x-8">
+          <DropdownProps label="Products" items={[{href:"/foxtrail", label:"Foxtrail"}]} />
+          <Link to="#" className="font-medium hover:underline underline-offset-4">
+            About
+          </Link>
+          <Link to="#" className="font-medium hover:underline underline-offset-4">
+            Contact
+          </Link>
+          </nav>
 
         <div className="hidden md:flex items-center space-x-4">
           <ThemeToggle />
