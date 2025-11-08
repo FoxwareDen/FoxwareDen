@@ -14,7 +14,8 @@ import { useOrg } from "../store/orgHook";
 import ThemeToggle from "./ThemeToggle";
 import { useUserSession } from "../store/auth";
 import { signOutUser } from "../api/db";
-import DropdownProps from "./DropDown";
+import DropdownProps, { DropdownItem } from "./DropDown";
+import { getRepos } from "../api/dashboard";
 
 function Header() {
   const navigate = useNavigate();
@@ -22,6 +23,19 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { session, setSession } = useUserSession();
   const [authenticated, setAuthenticated] = useState(false);
+  const [productRoutes, setProductRoutes] = useState<DropdownItem[]>([{href:"/froxtrail",label:"Foxtrail"}])
+
+  useEffect(()=>{
+    const fetchRepos = async () => {
+        const results = (await getRepos())?.map(r=>({href: `/${r.title}`, label: r.title}));
+
+        if (!results) return;
+
+        setProductRoutes(results);
+    }
+
+    fetchRepos();
+  },[])
 
   useEffect(() => {
     if (session) {
@@ -56,7 +70,7 @@ function Header() {
         </Link>
 
          <nav className="hidden md:flex items-center space-x-8">
-          <DropdownProps label="Products" items={[{href:"/foxtrail", label:"Foxtrail"}]} />
+          <DropdownProps label="Products" items={productRoutes} />
           <Link to="#" className="font-medium hover:underline underline-offset-4">
             About
           </Link>
@@ -114,7 +128,7 @@ function Header() {
                   <X className="h-6 w-6" />
                 </button>
               </div>
-              <nav className="flex flex-col py-8 px-6 space-y-6">
+              <nav className="flex flex-col py-8 px-6 space-y-6 overflow-y-auto">
                 <Link
                   to="/"
                   className="text-2xl font-medium"
@@ -122,15 +136,7 @@ function Header() {
                 >
                   Home
                 </Link>
-                {/* 
-                TODO: add backend to manage later
-                <Link
-                  to="#"
-                  className="text-2xl font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Members
-                </Link>
+                <DropdownProps className="text-1xl font-bold" items={productRoutes}  label="PRODUCTS"/>
                 <Link
                   to="#"
                   className="text-2xl font-medium"
@@ -138,22 +144,13 @@ function Header() {
                 >
                   About
                 </Link>
-                {/*
-                TODO: add backend to manage later
-                 <Link
-                  to="#"
-                  className="text-2xl font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Blog
-                </Link>
                 <Link
                   to="#"
                   className="text-2xl font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
-                </Link> */}
+                </Link>
               </nav>
               <div className="mt-auto border-t-4 border-black dark:border-white p-6 flex flex-col space-y-4">
                 <a
