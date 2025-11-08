@@ -27,7 +27,7 @@ function Header() {
 
   useEffect(()=>{
     const fetchRepos = async () => {
-        const results = (await getRepos())?.map(r=>({href: `/${r.title}`, label: r.title}));
+        const results = (await getRepos())?.map(r=>({href: `/${r.title.toLocaleLowerCase()}`, label: r.title}));
 
         if (!results) return;
 
@@ -71,12 +71,12 @@ function Header() {
 
          <nav className="hidden md:flex items-center space-x-8">
           <DropdownProps label="Products" items={productRoutes} />
-          <Link to="#" className="font-medium hover:underline underline-offset-4">
+          <Link to="/about" className="font-medium hover:underline underline-offset-4">
             About
           </Link>
-          <Link to="#" className="font-medium hover:underline underline-offset-4">
+          {/* <Link to="#" className="font-medium hover:underline underline-offset-4">
             Contact
-          </Link>
+          </Link> */}
           </nav>
 
         <div className="hidden md:flex items-center space-x-4">
@@ -138,19 +138,19 @@ function Header() {
                 </Link>
                 <DropdownProps className="text-1xl font-bold" items={productRoutes}  label="PRODUCTS"/>
                 <Link
-                  to="#"
+                  to="/about"
                   className="text-2xl font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   About
                 </Link>
-                <Link
+                {/* <Link
                   to="#"
                   className="text-2xl font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Contact
-                </Link>
+                </Link> */}
               </nav>
               <div className="mt-auto border-t-4 border-black dark:border-white p-6 flex flex-col space-y-4">
                 <a
