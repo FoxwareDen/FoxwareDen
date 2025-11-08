@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { ChevronDown } from "lucide-react"
 import { Link } from "react-router";
 
-interface DropdownItem {
+export interface DropdownItem {
   label: string
   href: string
 }
@@ -12,9 +12,10 @@ interface DropdownItem {
 interface DropdownProps {
   label: string
   items: DropdownItem[]
+  className?:string
 }
 
-export default function DropdownProps({ label, items }: DropdownProps) {
+export default function DropdownProps({ label, items, className }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -38,7 +39,7 @@ export default function DropdownProps({ label, items }: DropdownProps) {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="font-medium hover:underline underline-offset-4 flex items-center gap-1"
+        className={`font-medium hover:underline underline-offset-4 flex items-center gap-1 ${className}`}
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
