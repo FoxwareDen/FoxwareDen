@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useLocation } from "react-router";
+import {  useLocation } from "react-router";
 import { getRepos, Repo, Status } from "../../api/dashboard";
 import Loading from "../../ui/Loading";
 import NotFound from "../404/Page";
-import { Activity, CheckCircle2, Clock, Download } from "lucide-react";
-import { getDownload, getProject, getRepos as getProjects } from "../../api/requests";
+import {  Download } from "lucide-react";
+import { getDownload, getProject } from "../../api/requests";
 
 
 export default function Products() {
@@ -62,7 +62,7 @@ function Page({repo}:{repo:Repo}) {
   const {statusColor,} = useMemo(()=>({
     statusColor: colors[repo.status]
   }),[repo.status])
-  const [repoData, setRepoData]= useState<Repo|null>(null)
+  // const [repoData, setRepoData]= useState<Repo|null>(null)
 
   useEffect(()=>{
     const fetchRepoData = async () => {
