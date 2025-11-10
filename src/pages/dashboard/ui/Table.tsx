@@ -1,4 +1,4 @@
-import { Edit, Plus, Trash2 } from "lucide-react";
+import { Edit, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getRepos, Repo } from "../../../api/dashboard";
 import { MetaData } from "../../../api/db";
@@ -7,7 +7,7 @@ import { MetaData } from "../../../api/db";
 interface Project extends Repo,MetaData {}
 
 function Table() {
-  const [loading,setLoading] = useState(false);
+  const [_loading,setLoading] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
 
 
