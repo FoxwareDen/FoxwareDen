@@ -173,6 +173,19 @@ export async function getRepos(url: string, page = 0) {
   }>;
 }
 
+export async function getProject(title: string)  {
+  const response = await fetch(
+    `${URL}/getProject?title=${title}`
+  );
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const repo = (await response.json()).repo as Repo
+  return repo;
+}
+
 export async function getWithAuth<T>(
   url: string
 ): Promise<[T | null, string | null]> {
@@ -187,4 +200,13 @@ export async function getWithAuth<T>(
   } catch (error) {
     return [null, `${error}`];
   }
+}
+
+// requests.ts
+export async function getDownload(title: string) {
+  const response = await fetch(`/.netlify/functions/getDownload?title=${title}`);
+  if (!response.ok) throw new Error(response.statusText);
+
+  // returns { name, size, download_url }
+  return await response.json();
 }

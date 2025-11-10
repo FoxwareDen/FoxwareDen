@@ -4,6 +4,7 @@ import { getRepos, Repo, Status } from "../../api/dashboard";
 import Loading from "../../ui/Loading";
 import NotFound from "../404/Page";
 import { Activity, CheckCircle2, Clock, Download } from "lucide-react";
+import { getDownload, getProject, getRepos as getProjects } from "../../api/requests";
 
 
 export default function Products() {
@@ -51,7 +52,6 @@ export default function Products() {
     )
 }
 
-
 function Page({repo}:{repo:Repo}) {
   const colors: Record<Status, string> = {
     "active":"bg-green-400",
@@ -62,20 +62,41 @@ function Page({repo}:{repo:Repo}) {
   const {statusColor,} = useMemo(()=>({
     statusColor: colors[repo.status]
   }),[repo.status])
+  const [repoData, setRepoData]= useState<Repo|null>(null)
 
+  useEffect(()=>{
+    const fetchRepoData = async () => {
+      try {
+        const data = await getProject(repo.title.toLocaleLowerCase())
 
+        console.log("repo page", data);
 
-  const handleDownload = () => {
-    // Handle download logic
-    console.log("Downloading software...")
-  }
+        // setRepoData(data)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchRepoData()
+  },[])
+  
+  const handleDownload = async () => {
+    try {
+      const apk = await getDownload(repo.title);
+      // Open direct browser download for large files
+      window.open(apk.download_url, "_blank");
+    } catch (err) {
+      console.error("Download failed:", err);
+      alert("Download failed");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-black">
       
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center my-20">
           {/* Left side - Text content */}
           <div className="space-y-6">
             <div className={`inline-block px-4 py-2 text-black rotate-2 ${statusColor}`}>
@@ -93,13 +114,13 @@ function Page({repo}:{repo:Repo}) {
             {/* META DATA BLOCKS */}
             <div className="flex flex-wrap gap-4 pt-4">
               {/* Block */}
-              <div className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white">
+              {/* <div className="px-4 py-2 bg-black dark:bg-white text-white dark:text-black border-2 border-black dark:border-white">
                 <span className="font-mono font-bold">SIZE</span>
-              </div>
+              </div> */}
               {/* Block */}
-              <div className="px-4 py-2 border-2 border-black dark:border-white">
+              {/* <div className="px-4 py-2 border-2 border-black dark:border-white">
                 <span className="font-mono">open_issues</span>
-              </div>
+              </div> */}
               {/* Block */}
               {/* <div className="px-4 py-2 border-2 border-black dark:border-white">
                 <span className="font-mono">15K+ STARS</span>
