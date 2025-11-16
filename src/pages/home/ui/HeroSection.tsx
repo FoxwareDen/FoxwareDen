@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { useOrg } from "../../../store/orgHook";
 
 function HeroSection() {
@@ -8,7 +9,7 @@ function HeroSection() {
       <div className="absolute top-0 right-0 w-1/2 h-full bg-black dark:bg-white -skew-x-12 transform origin-top-right -z-10 translate-x-20"></div>
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
-          <div className="relative z-10">
+          <div className="relative z-10 flex justify-center flex-col">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 font-mono tracking-tight">
               {orgData && !loading ? orgData.name : "Foxware-Den"}
               {/* <span className="block -ml-1 text-6xl md:text-8xl mt-2">Den</span> */}
@@ -19,16 +20,19 @@ function HeroSection() {
             </p>
             <div className="flex flex-wrap gap-4">
               {/* TODO: link later */}
-              <button className="bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors rounded-none text-lg h-14 px-8 dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white">
+              <Link
+                to="mailto:foxwareden@gmail.com"
+                className="font-mono px-6 py-3 border-4 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+              >
                 <a
                   href={
                     orgData ? orgData.html_url : "https://github.com/FoxwareDen"
                   }
                   target="_blank"
                 >
-                  Explore Organization
+                  Contact Organization
                 </a>
-              </button>
+              </Link>
             </div>
           </div>
           <div className="relative">
