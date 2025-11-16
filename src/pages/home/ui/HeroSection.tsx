@@ -14,9 +14,8 @@ function HeroSection() {
               {/* <span className="block -ml-1 text-6xl md:text-8xl mt-2">Den</span> */}
             </h1>
             <p className="text-lg md:text-xl mb-8 max-w-md">
-              {orgData && !loading
-                ? orgData.description
-                : "Building the future of open source, together."}
+              Building next-generation web applications and software solutions
+              with cutting-edge technology.
             </p>
             <div className="flex flex-wrap gap-4">
               {/* TODO: link later */}

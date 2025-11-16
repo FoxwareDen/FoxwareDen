@@ -1,3 +1,4 @@
+import Services from "../../ui/Services";
 import HeroSection from "./ui/HeroSection";
 import ProjectsSection from "./ui/ProjectsSection";
 import TeamMembersSection from "./ui/TeamMembersSection";
@@ -7,6 +8,7 @@ function Home() {
   return (
     <>
       <HeroSection />
+      <Services />
       <ProjectsSection />
       <TeamMembersSection />
       <TechnologyStacksSection />
