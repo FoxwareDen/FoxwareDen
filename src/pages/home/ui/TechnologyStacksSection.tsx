@@ -111,3 +111,60 @@ function TechnologyStacksSection() {
 }
 
 export default TechnologyStacksSection;
+
+/* TODO: updated design maybe?
+
+<section className="container mx-auto px-4 py-20 border-t-4 border-black dark:border-white">
+        <h2 className="font-mono text-4xl md:text-5xl font-bold mb-12 -rotate-1">
+          [TECH STACK]
+        </h2>
+        <div className="max-w-5xl">
+          <p className="font-mono text-lg mb-8 leading-relaxed">
+            We use next-generation technologies to build fast, reliable, and
+            scalable applications:
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            
+            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
+              <div className="w-full h-1 bg-cyan-400 mb-4" />
+              <p className="font-mono text-lg font-bold">REACT</p>
+            </div>
+
+            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
+              <div className="w-full h-1 bg-black dark:bg-white mb-4" />
+              <p className="font-mono text-lg font-bold">NEXT.JS</p>
+            </div>
+
+            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
+              <div className="w-full h-1 bg-yellow-400 mb-4" />
+              <p className="font-mono text-lg font-bold">TAURI</p>
+            </div>
+
+            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
+              <div className="w-full h-1 bg-orange-600 mb-4" />
+              <p className="font-mono text-lg font-bold">RUST</p>
+            </div>
+
+            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
+              <div className="w-full h-1 bg-cyan-500 mb-4" />
+              <p className="font-mono text-lg font-bold">GO</p>
+            </div>
+
+            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
+              <div className="w-full h-1 bg-blue-600 mb-4" />
+              <p className="font-mono text-lg font-bold">TYPESCRIPT</p>
+            </div>
+
+            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
+              <div className="w-full h-1 bg-teal-500 mb-4" />
+              <p className="font-mono text-lg font-bold">TAILWIND</p>
+            </div>
+
+            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
+              <div className="w-full h-1 bg-blue-500 mb-4" />
+              <p className="font-mono text-lg font-bold">POSTGRES</p>
+            </div>
+          </div>
+        </div>
+      </section>
+*/

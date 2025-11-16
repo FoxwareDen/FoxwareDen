@@ -5,6 +5,7 @@ import LoginPage from "./pages/login/Page";
 import DashboardPage from "./pages/dashboard/Page";
 import ProtectedRoute from "./ProtectedRoute";
 import Products from "./pages/products/Page";
+import AboutPage from "./pages/about/Page";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<Products />} />
       </Route>
     </Routes>

@@ -29,7 +29,14 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(defaultTheme);
 
+  // initial load
   useEffect(() => {
+    const theme: Theme | null = localStorage.getItem("theme") as Theme;
+    if (!theme) setDomTheme("system");
+    setDomTheme(theme);
+  }, []);
+
+  const setDomTheme = (theme: "dark" | "light" | "system") => {
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
 
@@ -39,17 +46,19 @@ export function ThemeProvider({
         ? "dark"
         : "light";
       root.classList.add(systemTheme);
+      localStorage.setItem("theme", systemTheme);
       return;
     }
 
+    localStorage.setItem("theme", theme);
     root.classList.add(theme);
-  }, [theme]);
+  };
 
   const value = {
     theme,
     setTheme: (theme: Theme) => {
       setTheme(theme);
-      localStorage.setItem("theme", theme);
+      setDomTheme(theme);
     },
   };
 

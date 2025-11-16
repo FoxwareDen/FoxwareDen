@@ -7,9 +7,7 @@ function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div className="mb-6 md:mb-0">
             <h3 className="text-2xl font-bold font-mono">FoxwareDen</h3>
-            <p className="mt-2">
-              Building the future of open source, together.
-            </p>
+            <p className="mt-2">Building the future together.</p>
           </div>
           <div className="flex space-x-4">
             <a target="_blank" href="https://github.com/orgs/FoxwareDen/">
@@ -30,8 +28,7 @@ function Footer() {
         <div className="h-0.5 w-full bg-black dark:bg-white mb-8"></div>
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} Open Source Collective. All rights
-            reserved.
+            © {new Date().getFullYear()} Collective. All rights reserved.
           </p>
           <div className="flex space-x-6">
             {/* 
@@ -44,7 +41,8 @@ function Footer() {
             </Link>
             <Link href="#" className="text-sm hover:underline">
               Code of Conduct
-            </Link> */}
+            </Link> 
+            */}
           </div>
         </div>
       </div>
