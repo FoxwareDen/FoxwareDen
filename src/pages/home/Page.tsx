@@ -1,6 +1,5 @@
 import Services from "../../ui/Services";
 import HeroSection from "./ui/HeroSection";
-import ProjectsSection from "./ui/ProjectsSection";
 import TeamMembersSection from "./ui/TeamMembersSection";
 import TechnologyStacksSection from "./ui/TechnologyStacksSection";
 
@@ -9,7 +8,7 @@ function Home() {
     <>
       <HeroSection />
       <Services />
-      <ProjectsSection />
+      {/* <ProjectsSection /> */}
       <TeamMembersSection />
       <TechnologyStacksSection />
     </>
