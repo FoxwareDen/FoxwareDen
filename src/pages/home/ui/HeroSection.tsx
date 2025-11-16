@@ -19,9 +19,8 @@ function HeroSection() {
               with cutting-edge technology.
             </p>
             <div className="flex flex-wrap gap-4">
-              {/* TODO: link later */}
               <Link
-                to="mailto:foxwareden@gmail.com"
+                to="mailto:foxwareden@gmail.com?subject=Learn%20more"
                 className="font-mono px-6 py-3 border-4 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
               >
                 <a
