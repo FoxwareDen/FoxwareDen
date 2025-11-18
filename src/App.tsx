@@ -6,6 +6,7 @@ import DashboardPage from "./pages/dashboard/Page";
 import ProtectedRoute from "./ProtectedRoute";
 import Products from "./pages/products/Page";
 import AboutPage from "./pages/about/Page";
+import { TermsPage } from "./pages/terms/Page";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           }
         />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/terms" element={<TermsPage />} />
         <Route path="*" element={<Products />} />
       </Route>
     </Routes>
