@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Products from "./pages/products/Page";
 import AboutPage from "./pages/about/Page";
 import { TermsPage } from "./pages/terms/Page";
+import PrivacyPage from "./pages/privacy/Page";
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
           }
         />
         <Route path="/about" element={<AboutPage />} />
+
         <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="*" element={<Products />} />
       </Route>
     </Routes>

@@ -35,11 +35,11 @@ function Footer() {
             <Link to="/terms" className="text-sm hover:underline">
               Terms of Service
             </Link>
-            {/* 
-            TODO: add later in development
-            <Link href="#" className="text-sm hover:underline">
+            <Link to="/privacy" className="text-sm hover:underline">
               Privacy Policy
             </Link>
+            {/* 
+            TODO: add later in development
             <Link href="#" className="text-sm hover:underline">
               Code of Conduct
             </Link> 
