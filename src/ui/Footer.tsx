@@ -1,4 +1,5 @@
 import { ExternalLink, GitFork } from "lucide-react";
+import { Link } from "react-router";
 
 function Footer() {
   return (
@@ -31,13 +32,13 @@ function Footer() {
             © {new Date().getFullYear()} Collective. All rights reserved.
           </p>
           <div className="flex space-x-6">
+            <Link to="/terms" className="text-sm hover:underline">
+              Terms of Service
+            </Link>
             {/* 
             TODO: add later in development
             <Link href="#" className="text-sm hover:underline">
               Privacy Policy
-            </Link>
-            <Link href="#" className="text-sm hover:underline">
-              Terms of Service
             </Link>
             <Link href="#" className="text-sm hover:underline">
               Code of Conduct
