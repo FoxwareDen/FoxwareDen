@@ -1,22 +1,11 @@
-import { ArrowLeft } from "lucide-react";
 import { ReactNode } from "react";
-import { Link } from "react-router";
 
 export function TermsPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
-      {/* Header */}
-      <header className="border-b-4 border-black dark:border-white">
-        <div className="container mx-auto px-4 py-6">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 font-mono text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black border-2 border-black dark:border-white px-4 py-2 transition-colors"
-          >
-            <ArrowLeft size={16} />
-            BACK TO HOME
-          </Link>
-        </div>
-      </header>
+      <div className="border-b-4 border-black dark:border-white">
+        <div className="container mx-auto px-4 py-6"></div>
+      </div>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-16">
