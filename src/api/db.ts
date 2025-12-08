@@ -6,8 +6,8 @@ export const db = createClient(
 );
 
 export interface MetaData {
-  id: number,
-  created_at: string
+  id: number;
+  created_at: string;
 }
 
 export async function getAllowedList(): Promise<string[] | null> {
