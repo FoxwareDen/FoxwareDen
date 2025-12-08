@@ -23,19 +23,24 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { session, setSession } = useUserSession();
   const [authenticated, setAuthenticated] = useState(false);
-  const [productRoutes, setProductRoutes] = useState<DropdownItem[]>([{href:"/froxtrail",label:"Foxtrail"}])
+  const [productRoutes, setProductRoutes] = useState<DropdownItem[]>([
+    { href: "/froxtrail", label: "Foxtrail" },
+  ]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchRepos = async () => {
-        const results = (await getRepos())?.map(r=>({href: `/${r.title.toLocaleLowerCase()}`, label: r.title}));
+      const results = (await getRepos())?.map((r) => ({
+        href: `/${r.title.toLocaleLowerCase()}`,
+        label: r.title,
+      }));
 
-        if (!results) return;
+      if (!results) return;
 
-        setProductRoutes(results);
-    }
+      setProductRoutes(results);
+    };
 
     fetchRepos();
-  },[])
+  }, []);
 
   useEffect(() => {
     if (session) {
@@ -69,19 +74,25 @@ function Header() {
           {orgData && !loading ? orgData.name : "Foxware-Den"}
         </Link>
 
-         <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-8">
           <DropdownProps label="Products" items={productRoutes} />
-          <Link to="/about" className="font-medium hover:underline underline-offset-4">
+          <Link
+            to="/about"
+            className="font-medium hover:underline underline-offset-4"
+          >
             About
           </Link>
           {/* <Link to="#" className="font-medium hover:underline underline-offset-4">
             Contact
           </Link> */}
-          </nav>
+        </nav>
 
         <div className="hidden md:flex items-center space-x-4">
           <ThemeToggle />
-          <button className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center">
+          <button
+            aria-label="org repo link"
+            className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center"
+          >
             <a
               href={
                 orgData ? orgData.html_url : "https://github.com/FoxwareDen"
@@ -92,6 +103,7 @@ function Header() {
             </a>
           </button>
           <button
+            aria-label={authenticated ? "Dashboard link" : "Login link"}
             className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center"
             onClick={handleClickButton}
           >
@@ -103,6 +115,7 @@ function Header() {
           </button>
           {authenticated && (
             <button
+              aria-label="log out button"
               className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center"
               onClick={signOut}
             >
@@ -112,7 +125,11 @@ function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        <button className="md:hidden" onClick={() => setIsMenuOpen(true)}>
+        <button
+          aria-label="toggle navbar menu"
+          className="md:hidden"
+          onClick={() => setIsMenuOpen(true)}
+        >
           <Menu className="h-6 w-6" />
           <span className="sr-only">Toggle menu</span>
         </button>
@@ -124,7 +141,10 @@ function Header() {
                 <span className="font-bold text-2xl font-mono">
                   {orgData && !loading ? orgData.name : "Foxware-Den"}
                 </span>
-                <button onClick={() => setIsMenuOpen(false)}>
+                <button
+                  aria-label="close navbar menu"
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   <X className="h-6 w-6" />
                 </button>
               </div>
@@ -136,7 +156,11 @@ function Header() {
                 >
                   Home
                 </Link>
-                <DropdownProps className="text-1xl font-bold" items={productRoutes}  label="PRODUCTS"/>
+                <DropdownProps
+                  className="text-1xl font-bold"
+                  items={productRoutes}
+                  label="PRODUCTS"
+                />
                 <Link
                   to="/about"
                   className="text-2xl font-medium"
@@ -159,17 +183,24 @@ function Header() {
                   }
                   target="_blank"
                 >
-                  <button className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2">
+                  <button
+                    aria-label="link to orgs repo"
+                    className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
+                  >
                     <GitFork className="h-5 w-5" />
                     GitHub Repo
                   </button>
                 </a>
-                <button className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2">
+                <button
+                  aria-label="toggle theme button"
+                  className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
+                >
                   <ThemeToggle className="border-0" />
                   Toggle Theme
                 </button>
 
                 <button
+                  aria-label={authenticated ? "Dashboard link" : "Login link"}
                   className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
                   onClick={handleClickButton}
                 >
@@ -187,6 +218,7 @@ function Header() {
                 </button>
                 {authenticated && (
                   <button
+                    aria-label="log out button"
                     className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
                     onClick={signOut}
                   >

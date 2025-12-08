@@ -3,36 +3,34 @@ import { useEffect, useState } from "react";
 import { getRepos, Repo } from "../../../api/dashboard";
 import { MetaData } from "../../../api/db";
 
-
-interface Project extends Repo,MetaData {}
+interface Project extends Repo, MetaData {}
 
 function Table() {
-  const [_loading,setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     const fetchRepos = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
 
         const result = await getRepos();
 
         if (!result) {
-          setLoading(false)
-          return
+          setLoading(false);
+          return;
         }
 
-        setProjects(result as Project[])
+        setProjects(result as Project[]);
       } catch (error) {
         console.error(error);
-      }finally {
-        setLoading(false)
+      } finally {
+        setLoading(false);
       }
-    }
+    };
 
     fetchRepos();
-  },[])
+  }, []);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -109,10 +107,14 @@ function Table() {
                 </td> */}
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
-                    <button className="p-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors">
+                    <button
+                      aria-label="edit content button"
+                      className="p-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                    >
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
+                      aria-label="delete content button"
                       // onClick={() => handleDelete(project.id)}
                       className="p-2 border-2 border-black dark:border-white hover:bg-[#FF5252] hover:text-black hover:border-black transition-colors"
                     >
