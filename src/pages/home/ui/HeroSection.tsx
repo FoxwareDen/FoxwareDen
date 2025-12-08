@@ -23,14 +23,7 @@ function HeroSection() {
                 to="mailto:foxwareden@gmail.com?subject=Learn%20more"
                 className="font-mono px-6 py-3 border-4 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
               >
-                <a
-                  href={
-                    orgData ? orgData.html_url : "https://github.com/FoxwareDen"
-                  }
-                  target="_blank"
-                >
-                  Contact Organization
-                </a>
+                Contact Organization
               </Link>
             </div>
           </div>
