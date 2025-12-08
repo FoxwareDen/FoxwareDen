@@ -1,9 +1,4 @@
-import { useEffect, useState } from "react";
 import TechStack from "./TechStack";
-import { useOrg } from "../../../store/orgHook";
-import { getWithAuth, Repo } from "../../../api/requests";
-import Loading from "../../../ui/Loading";
-import ErrorSection from "../../../ui/ErrorSection";
 
 type TechStack = {
   technology: string;
@@ -11,160 +6,48 @@ type TechStack = {
 };
 
 function TechnologyStacksSection() {
-  const colors = [
-    "#4A9DFF",
-    "#FF5252",
-    "#FFD60A",
-    "#4CAF50",
-    "#9C27B0",
-    "#FF9800",
-  ];
-
-  const { loading, orgData } = useOrg();
-  const [techStacksLoading, setTechStacksLoading] = useState(false);
-  const [techStacksError, setTechStacksError] = useState<string | null>(null);
-  const [techStacks, setTechStacks] = useState<TechStack[] | null>(null);
-
-  useEffect(() => {
-    const fetchRepoTechStack = async () => {
-      if (loading) return;
-      if (!orgData?.repos_url) return;
-      try {
-        setTechStacksLoading(true);
-        setTechStacksError(null);
-        const [res, error] = await getWithAuth<{
-          message: string;
-          data: Repo[];
-        }>(orgData.repos_url);
-
-        if (error) throw new Error(error);
-        if (!res) return;
-
-        const topics: string[] = [];
-
-        for (const repo of res.data) {
-          topics.push(...repo.topics);
-        }
-
-        // reduce clones
-        const filteredTopics = topics.reduce((prev: string[], curr: string) => {
-          if (prev.includes(curr)) {
-            return prev;
-          } else if (!["native-apps", "website"].includes(curr)) {
-            return [...prev, curr];
-          } else {
-            return prev;
-          }
-        }, []);
-
-        let counter = 0;
-        const techStacksWithColor = filteredTopics.map((technology) => {
-          counter + 1 == colors.length ? (counter = 0) : counter++;
-          const color = colors[counter];
-          return {
-            technology,
-            color,
-          } as TechStack;
-        });
-
-        setTechStacks(techStacksWithColor);
-      } catch (error) {
-        console.error(error);
-        setTechStacksError(`${error}`);
-      } finally {
-        setTechStacksLoading(false);
-      }
-    };
-
-    fetchRepoTechStack();
-  }, [loading]);
-
   return (
-    <section className="px-4 py-16 md:py-24 bg-black text-white dark:bg-zinc-900">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold font-mono mb-12">
-          TECH STACKS
-        </h2>
+    <section className="px-4 py-16 md:py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-zinc-900 to-black dark:from-zinc-950 dark:via-black dark:to-zinc-950" />
 
-        {techStacksLoading || techStacks == null ? (
-          <>
-            <Loading text="Loading TechStacks" mode="light" />
-          </>
-        ) : techStacksError ? (
-          <>
-            <ErrorSection message={techStacksError} type="error" />
-          </>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
-            {techStacks.map((techStack, index) => (
-              <TechStack
-                key={index}
-                technology={techStack.technology}
-                color={techStack.color}
-              />
-            ))}
-          </div>
-        )}
+      <div className="absolute top-10 right-10 w-32 h-32 border-2 border-white/10 rotate-12" />
+      <div className="absolute bottom-20 left-20 w-24 h-24 border-2 border-white/10 -rotate-12" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold font-mono mb-4 text-white">
+            TECH STACKS
+          </h2>
+          <p className="text-lg text-white/80 max-w-2xl">
+            Powered by cutting-edge technologies and frameworks
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+          <TechStack technology="TypeScript" color="#3178C6" />
+          <TechStack technology="JavaScript" color="#F7DF1E" />
+          <TechStack technology="React" color="#61DAFB" />
+          <TechStack technology="Node.js" color="#8BC34A" />
+          <TechStack technology="PostgreSQL" color="#FF5722" />
+          <TechStack technology="Docker" color="#0D47A1" />
+          <TechStack technology="Vercel" color="#FF4081" />
+          <TechStack technology="Next.js" color="#9C27B0" />
+          <TechStack technology="Tailwind" color="#00BCD4" />
+          <TechStack technology="Rust" color="#FF6D00" />
+          <TechStack technology="Python" color="#4CAF50" />
+        </div>
       </div>
     </section>
   );
+  // <TechStack technology="MongoDB" color="#47A248" />
+  //         <TechStack technology="Redis" color="#DC382D" />
+  //         <TechStack technology="GraphQL" color="#E10098" />
+  //         <TechStack technology="Kubernetes" color="#326CE5" />
+  //         <TechStack technology="AWS" color="#FF9900" />
+  //         <TechStack technology="Go" color="#00ADD8" />
+  //         <TechStack technology="WebAssembly" color="#654FF0" />
+  //         <TechStack technology="Svelte" color="#FF3E00" />
+  //         <TechStack technology="Vue.js" color="#4FC08D" />
 }
 
 export default TechnologyStacksSection;
-
-/* TODO: updated design maybe?
-
-<section className="container mx-auto px-4 py-20 border-t-4 border-black dark:border-white">
-        <h2 className="font-mono text-4xl md:text-5xl font-bold mb-12 -rotate-1">
-          [TECH STACK]
-        </h2>
-        <div className="max-w-5xl">
-          <p className="font-mono text-lg mb-8 leading-relaxed">
-            We use next-generation technologies to build fast, reliable, and
-            scalable applications:
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            
-            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
-              <div className="w-full h-1 bg-cyan-400 mb-4" />
-              <p className="font-mono text-lg font-bold">REACT</p>
-            </div>
-
-            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
-              <div className="w-full h-1 bg-black dark:bg-white mb-4" />
-              <p className="font-mono text-lg font-bold">NEXT.JS</p>
-            </div>
-
-            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
-              <div className="w-full h-1 bg-yellow-400 mb-4" />
-              <p className="font-mono text-lg font-bold">TAURI</p>
-            </div>
-
-            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
-              <div className="w-full h-1 bg-orange-600 mb-4" />
-              <p className="font-mono text-lg font-bold">RUST</p>
-            </div>
-
-            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
-              <div className="w-full h-1 bg-cyan-500 mb-4" />
-              <p className="font-mono text-lg font-bold">GO</p>
-            </div>
-
-            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
-              <div className="w-full h-1 bg-blue-600 mb-4" />
-              <p className="font-mono text-lg font-bold">TYPESCRIPT</p>
-            </div>
-
-            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
-              <div className="w-full h-1 bg-teal-500 mb-4" />
-              <p className="font-mono text-lg font-bold">TAILWIND</p>
-            </div>
-
-            <div className="border-4 border-black dark:border-white p-6 text-center bg-white dark:bg-black">
-              <div className="w-full h-1 bg-blue-500 mb-4" />
-              <p className="font-mono text-lg font-bold">POSTGRES</p>
-            </div>
-          </div>
-        </div>
-      </section>
-*/
