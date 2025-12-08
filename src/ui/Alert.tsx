@@ -76,6 +76,7 @@ function Alert() {
         >
           <h3 className="text-xl font-mono">{message}</h3>
           <button
+            aria-label="close alert"
             className="absolute right-0 top-1/2 -translate-y-1/2 h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center bg-white text-black dark:bg-black dark:text-white"
             onClick={handClick}
           >

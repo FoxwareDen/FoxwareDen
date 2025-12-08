@@ -9,7 +9,7 @@ import { Session, User } from "@supabase/supabase-js";
 import { useUserSession } from "../../store/auth";
 
 function LoginPage() {
-  const [signUpText, setSignUpText] = useState<string|null>(null);
+  const [signUpText, setSignUpText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { setSession } = useUserSession();
   const [mode, setMode] = useState<"signIn" | "signUp">("signIn");
@@ -22,34 +22,34 @@ function LoginPage() {
   useEffect(() => {
     (async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const emails = await getAllowedList();
         if (!emails) return;
         setAllowedEmails(emails);
       } catch (error) {
         console.error(error);
-      }finally{
-        setLoading(false)
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     // Handle email login logic here
     let success: { user: User | null; session: Session | null } | null = null;
 
     try {
       if (mode == "signIn") {
-      success = await signInWithEmail(email, password);
-    } else {
-      success = await signUpWithEmail(email, password);
-      setSignUpText("A Confermation link was sent to your email")
-      return;
-    }
+        success = await signInWithEmail(email, password);
+      } else {
+        success = await signUpWithEmail(email, password);
+        setSignUpText("A Confermation link was sent to your email");
+        return;
+      }
     } catch (error) {
-     console.error(error);
+      console.error(error);
     }
 
     if (!success) return;
@@ -58,7 +58,7 @@ function LoginPage() {
 
     if (!session) return;
 
-    setLoading(false)
+    setLoading(false);
 
     setSession(session);
 
@@ -86,11 +86,11 @@ function LoginPage() {
             {/* Email Login Form */}
             <form onSubmit={handleEmailLogin} className="space-y-6">
               {/* Email Field */}
-              {
-                signUpText && (
-                    <h2 className="text-2xl font-bold font-mono mb-2">{signUpText}</h2>
-                )
-              }
+              {signUpText && (
+                <h2 className="text-2xl font-bold font-mono mb-2">
+                  {signUpText}
+                </h2>
+              )}
               <div>
                 <label
                   htmlFor="email"
@@ -135,6 +135,7 @@ function LoginPage() {
                     required
                   />
                   <button
+                    aria-label="reveal password button"
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black dark:hover:text-white"
@@ -150,9 +151,12 @@ function LoginPage() {
 
               {/* Submit Button */}
               <button
-              disabled={loading}
+                disabled={loading}
                 type="submit"
-                className={`w-full py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white ${loading && "opacity-50"}`}
+                aria-label="submit button"
+                className={`w-full py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white ${
+                  loading && "opacity-50"
+                }`}
               >
                 {mode === "signIn" ? "SIGN IN" : "SIGN UP"}
               </button>

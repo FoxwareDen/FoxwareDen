@@ -13,6 +13,7 @@ function Tabs() {
       <div className="border-4 border-black dark:border-white mb-0 bg-white dark:bg-black">
         <div className="flex border-b-4 border-black dark:border-white">
           <button
+            aria-label="table tab"
             onClick={() => setActiveTab("table")}
             className={`flex-1 px-6 py-4 font-mono font-bold transition-colors border-r-4 border-black dark:border-white ${
               activeTab === "table"
@@ -23,6 +24,7 @@ function Tabs() {
             PROJECTS TABLE
           </button>
           <button
+            aria-label="form tab"
             onClick={() => setActiveTab("form")}
             className={`flex-1 px-6 py-4 font-mono font-bold transition-colors ${
               activeTab === "form"

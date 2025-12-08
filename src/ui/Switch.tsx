@@ -8,7 +8,7 @@ interface BrutalistSwitchProps {
   label?: string;
   disabled?: boolean;
   size?: "sm" | "md" | "lg";
-  className?:string
+  className?: string;
 }
 
 export default function BrutalistSwitch({
@@ -17,7 +17,7 @@ export default function BrutalistSwitch({
   label,
   disabled = false,
   size = "md",
-  className
+  className,
 }: BrutalistSwitchProps) {
   const [internalChecked, setInternalChecked] = useState(false);
 
@@ -61,6 +61,7 @@ export default function BrutalistSwitch({
       }`}
     >
       <button
+        aria-label="Toggle switch"
         type="button"
         role="switch"
         aria-checked={checked}

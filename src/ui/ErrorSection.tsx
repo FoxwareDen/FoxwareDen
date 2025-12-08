@@ -49,6 +49,7 @@ function ErrorSection({
           </div>
           {onDismiss && (
             <button
+              aria-label="close alert"
               onClick={onDismiss}
               className="h-8 w-8 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors"
             >
@@ -65,6 +66,7 @@ function ErrorSection({
           <div className="flex justify-end gap-4">
             {onRetry && (
               <button
+                aria-label="retry button"
                 onClick={onRetry}
                 className="px-4 py-2 border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-colors flex items-center"
               >

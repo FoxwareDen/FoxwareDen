@@ -3,38 +3,38 @@ import BrutalistSwitch from "../../../ui/Switch";
 import { createRepo, Repo, Status } from "../../../api/dashboard";
 
 function FormData() {
-  const [loading, setLoading]= useState(false)
+  const [loading, setLoading] = useState(false);
   // Form state
   const [formData, setFormData] = useState<Repo>({
     contributors: 0,
     description: "",
-    repository_url:"",
-    status:"pending",
+    repository_url: "",
+    status: "pending",
     title: "",
-    public:false
+    public: false,
   });
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    try {
-      setLoading(true)
 
-      createRepo(formData)
+    try {
+      setLoading(true);
+
+      createRepo(formData);
 
       setFormData({
         contributors: 0,
         description: "",
         public: false,
-        repository_url:"",
-        status:"active",
-        title:""
-      })
-      setLoading(false);  
+        repository_url: "",
+        status: "active",
+        title: "",
+      });
+      setLoading(false);
     } catch (error) {
-      
-    }finally {
-      setLoading(false)
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -169,7 +169,10 @@ function FormData() {
               id="license"
               value={formData.status}
               onChange={(e) =>
-                setFormData({ ...formData, status: e.target.value as Status | "pending" })
+                setFormData({
+                  ...formData,
+                  status: e.target.value as Status | "pending",
+                })
               }
               className="w-full px-4 py-3 border-2 border-black dark:border-white bg-white dark:bg-black focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
               required
@@ -178,13 +181,17 @@ function FormData() {
               <option value="inactive">inactive</option>
               <option value="pending">pending</option>
             </select>
-          </div> 
+          </div>
           <BrutalistSwitch
             checked={formData.public}
             onCheckedChange={(checked) =>
               setFormData({ ...formData, public: checked })
             }
-            className={`${formData.public ? "border-2 border-green-500 bg-green-500 dark:border-green-500 dark:bg-green-500":  "border-2 border-red-500 bg-red-500 dark:border-red-500 dark:bg-red-500"}`}
+            className={`${
+              formData.public
+                ? "border-2 border-green-500 bg-green-500 dark:border-green-500 dark:bg-green-500"
+                : "border-2 border-red-500 bg-red-500 dark:border-red-500 dark:bg-red-500"
+            }`}
             label="PUBLIC REPOSITORY"
           />
         </div>
@@ -193,28 +200,12 @@ function FormData() {
         <div className="flex gap-4">
           <button
             disabled={loading}
+            aria-label="Form submission button"
             type="submit"
             className="flex-1 py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white"
           >
             CREATE PROJECT
           </button>
-          {/* <button
-            type="button"
-            onClick={() =>
-              setFormData({
-                projectName: "",
-                description: "",
-                repository: "",
-                language: "",
-                license: "MIT",
-                isPublic: true,
-                hasDocumentation: false,
-              })
-            }
-            className="px-6 py-3 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors font-mono font-bold"
-          >
-            RESET
-          </button> */}
         </div>
       </form>
     </div>

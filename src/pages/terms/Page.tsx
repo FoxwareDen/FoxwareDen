@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export function TermsPage() {
+export default function TermsPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
       <div className="border-b-4 border-black dark:border-white">
