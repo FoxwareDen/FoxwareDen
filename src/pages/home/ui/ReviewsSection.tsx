@@ -40,9 +40,7 @@ export default function ReviewSection() {
     (async () => {
       const reviews = await getReviews();
 
-      if (reviews?.length) {
-        setReviews(reviews);
-      }
+      setReviews(reviews || []);
     })();
   }, []);
 
