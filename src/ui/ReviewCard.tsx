@@ -4,6 +4,7 @@ import { Review } from "../api/reviews";
 export interface BrutalistReviewCardProps extends Partial<Review> {
   rating: number;
   className?: string;
+  created_at?: string;
 }
 
 export default function BrutalistReviewCard({
