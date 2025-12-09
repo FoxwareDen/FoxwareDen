@@ -67,7 +67,7 @@ function Header() {
   };
 
   return (
-    <header className="fixed w-full z-50 bg-white dark:bg-black dark:text-white border-b-4 border-black dark:border-white">
+    <header className="w-full z-50 bg-white dark:bg-black dark:text-white border-b-4 border-black dark:border-white">
       <Alert />
       <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
         <Link to="/" className="font-bold text-2xl font-mono">

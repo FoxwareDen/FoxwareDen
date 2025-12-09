@@ -177,7 +177,7 @@ function LoginPage() {
               </div>
             </form>
 
-            {/*
+            {/* TODO: add google auth later
             <div className="relative my-8">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t-2 border-black dark:border-white"></div>

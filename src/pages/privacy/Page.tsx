@@ -1,10 +1,6 @@
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
-      <div className="border-b-4 border-black dark:border-white">
-        <div className="container mx-auto px-4 py-6"></div>
-      </div>
-
       {/* Main Content */}
       <main className="container mx-auto px-4 py-16">
         {/* Hero */}
