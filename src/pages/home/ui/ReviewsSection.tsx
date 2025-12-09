@@ -5,36 +5,7 @@ import BrutalistReviewCard, {
 import { getReviews } from "../../../api/reviews";
 
 export default function ReviewSection() {
-  const [reviews, setReviews] = useState<BrutalistReviewCardProps[]>([
-    {
-      rating: 5,
-      description:
-        "FoxWareDen delivered an exceptional web application for our business. Their expertise in React and modern frameworks is unmatched. The final product exceeded our expectations in both performance and design.",
-      reviewerName: "Sarah Johnson",
-      created_at: "2024-01-15",
-    },
-    {
-      rating: 5,
-      description:
-        "Working with this team was a game-changer. They built a robust CMS that streamlined our entire content workflow. Their attention to detail and use of cutting-edge technology like Rust made all the difference.",
-      reviewerName: "Michael Chen",
-      created_at: "2024-02-20",
-    },
-    {
-      rating: 4,
-      description:
-        "Great experience from start to finish. The Tauri-based desktop application they developed runs smoothly across all platforms. Communication was clear and deadlines were met consistently.",
-      reviewerName: "Emma Rodriguez",
-      created_at: "2024-03-10",
-    },
-    {
-      rating: 5,
-      description:
-        "Absolutely stellar work! They transformed our complex requirements into an elegant, performant solution. The use of Go for our backend services resulted in incredible speed and reliability.",
-      reviewerName: "David Park",
-      created_at: "2024-03-25",
-    },
-  ]);
+  const [reviews, setReviews] = useState<BrutalistReviewCardProps[]>([]);
 
   useEffect(() => {
     (async () => {
