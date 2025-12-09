@@ -6,6 +6,7 @@ import { getOrgMetaData, heathCheck } from "./api/requests";
 import { useAlert } from "./ui/Alert";
 import { useOrg } from "./store/orgHook";
 import { ThemeProvider } from "./lib/ThemeProvider";
+import ScrollToTop from "./ui/ScrollToTop";
 
 function RootLayout() {
   const { setData, setLoading, setError } = useOrg();
@@ -47,6 +48,7 @@ function RootLayout() {
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-white dark:bg-black dark:text-white">
+        <ScrollToTop />
         <Header />
         <Outlet />
         <Footer />
