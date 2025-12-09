@@ -19,7 +19,10 @@ export default function DashboardPage() {
               >
                 <Home className="h-5 w-5" />
               </Link>
-              <button className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors font-mono">
+              <button
+                aria-label="logout button"
+                className="px-4 py-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors font-mono"
+              >
                 <LogOut className="h-5 w-5" />
               </button>
             </div>

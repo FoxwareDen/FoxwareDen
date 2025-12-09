@@ -33,6 +33,7 @@ function HeroSection() {
             <div className="relative z-10 border-4 border-black dark:border-white p-4 bg-white dark:bg-black transform rotate-2">
               <div className="border-2 border-black dark:border-white p-2">
                 <img
+                  fetchPriority="high"
                   src="/hero.webp"
                   alt="Code Illustration"
                   width={500}
