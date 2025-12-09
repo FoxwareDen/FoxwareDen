@@ -1,3 +1,4 @@
+import ClientSection from "./ui/ClientSection";
 import Tabs from "./ui/Tabs";
 
 export default function DashboardPage() {
@@ -10,12 +11,22 @@ export default function DashboardPage() {
             DASHBOARD
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            Manage your projects and settings
+            Manage your webpage data
           </p>
         </div>
 
         {/* Tabs Navigation */}
         <Tabs />
+
+        <div className="my-8">
+          <h1 className="text-4xl md:text-5xl font-bold font-mono mb-2">
+            CLIENT MANAGEMENT
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            Manage your clients data and stuff
+          </p>
+        </div>
+        <ClientSection />
       </div>
     </div>
   );
