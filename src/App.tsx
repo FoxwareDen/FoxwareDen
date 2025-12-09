@@ -10,6 +10,7 @@ const Products = lazy(() => import("./pages/products/Page"));
 const AboutPage = lazy(() => import("./pages/about/Page"));
 const PrivacyPage = lazy(() => import("./pages/privacy/Page"));
 const TermsPage = lazy(() => import("./pages/terms/Page"));
+const ReviewFormPage = lazy(() => import("./pages/reviews/ReviewFormPage"));
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
 
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
+          <Route
+            path="reviews/form/:token/:name"
+            element={<ReviewFormPage />}
+          />
           <Route path="*" element={<Products />} />
         </Route>
       </Routes>
