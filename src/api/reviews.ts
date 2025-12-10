@@ -56,16 +56,12 @@ export async function validateReviewPortal(token: string, client_ref: string) {
 
     // Check if portal is expired
     const createdAt = new Date(data.created_at).getTime(); // milliseconds
-    const now = new Date().getTime(); // milliseconds
+    const now = new Date().getTime();
+    const expirationDate =
+      createdAt + data.invalidate_amount * 24 * 60 * 60 * 1000; // days to milliseconds
+    const isExpired = now - expirationDate > 0;
 
-    // Convert invalidate_amount days to milliseconds
-    // Days * 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
-    const expireDuration = data.invalidate_amount * 24 * 60 * 60 * 1000;
-
-    // Calculate expiration timestamp
-    const expirationTime = createdAt + expireDuration;
-
-    if (now > expirationTime) {
+    if (isExpired) {
       await invalidateReviewPortal(token);
       return false;
     }

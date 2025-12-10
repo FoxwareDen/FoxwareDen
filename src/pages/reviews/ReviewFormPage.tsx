@@ -64,9 +64,7 @@ export default function ReviewFormPage() {
       setError({ message: "failed to submit review", type: "error" });
       return;
     } else {
-      alert("review submitted successfully");
       const invalidateResult = await invalidateReviewPortal(token);
-      alert(invalidateResult ? "portal invalidated" : "failed to invalidate");
 
       if (!invalidateResult) {
         setError({ message: "failed to invalidate portal", type: "error" });

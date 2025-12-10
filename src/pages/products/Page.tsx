@@ -18,9 +18,9 @@ export default function Products() {
 
       if (!results) return;
 
-      let products = results.reduce(
+      const products = results.reduce(
         (prev: Record<string, Repo>, curr: Repo) => {
-          let newData = prev;
+          const newData = prev;
 
           newData[curr.title.toLowerCase()] = curr;
           return newData;
