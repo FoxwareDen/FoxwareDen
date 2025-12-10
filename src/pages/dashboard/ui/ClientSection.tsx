@@ -16,10 +16,11 @@ export default function ClientSection() {
   // Handler for generating client portal link
   const handleGenerateLink = async (e: React.FormEvent) => {
     e.preventDefault();
+    // TODO: add form validation
     const link = await createReviewPortal({
-      invalidate_amount: Number(clientFormData.expiresIn),
-      client_ref: clientFormData.clientName,
-      email: clientFormData.clientEmail,
+      invalidate_amount: Number(clientFormData.expiresIn.trim()),
+      client_ref: clientFormData.clientName.trim(),
+      email: clientFormData.clientEmail.trim(),
     });
 
     if (link) {
