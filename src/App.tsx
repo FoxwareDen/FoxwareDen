@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router";
 import RootLayout from "./RootLayout";
 import Home from "./pages/home/Page";
 import Loading from "./ui/Loading";
+import CardPage from "./pages/card/Page";
 const LoginPage = lazy(() => import("./pages/login/Page"));
 const DashboardPage = lazy(() => import("./pages/dashboard/Page"));
 const ProtectedRoute = lazy(() => import("./ProtectedRoute"));
@@ -31,6 +32,8 @@ function App() {
 
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/card" element={<CardPage />} />
+
           <Route
             path="reviews/form/:token/:name"
             element={<ReviewFormPage />}
