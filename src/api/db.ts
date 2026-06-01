@@ -1,8 +1,21 @@
 import { createClient, Session, User } from "@supabase/supabase-js";
 
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error(
+    "❌ Supabase environment variables are missing! Check your .env file."
+  );
+}
+
+console.log(supabaseUrl);
+console.log(supabaseKey);
+
+
 export const db = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+  supabaseUrl || "https://placeholder-url-to-prevent-crash.supabase.co",
+  supabaseKey || "placeholder-key"
 );
 
 export interface MetaData {
