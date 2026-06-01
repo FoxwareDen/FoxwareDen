@@ -4,7 +4,7 @@ import { useAlert } from "../../ui/Alert";
 import Services from "../../ui/Services";
 import HeroSection from "./ui/HeroSection";
 import ReviewSection from "./ui/ReviewsSection";
-import TeamMembersSection from "./ui/TeamMembersSection";
+// import TeamMembersSection from "./ui/TeamMembersSection";
 import TechnologyStacksSection from "./ui/TechnologyStacksSection";
 import { getOrgMetaData, heathCheck } from "../../api/requests";
 
@@ -50,7 +50,7 @@ function Home() {
       <HeroSection />
       <Services />
       <ReviewSection />
-      <TeamMembersSection />
+      {/* <TeamMembersSection /> */}
       <TechnologyStacksSection />
     </>
   );
