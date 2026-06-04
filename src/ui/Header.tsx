@@ -153,7 +153,9 @@ function Header() {
                 <DropdownProps
                   className="text-xl font-bold"
                   items={productRoutes}
-                  label="PRODUCTS"
+                  label="Products"
+                  variant="mobile"
+                  onItemClick={() => setIsMenuOpen(false)}
                 />
                 <Link
                   to="/about"
