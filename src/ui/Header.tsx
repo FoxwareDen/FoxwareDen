@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// notepad - text;
 import {
   GitFork,
   NotepadTextIcon,
@@ -67,59 +66,53 @@ function Header() {
   };
 
   return (
-    <header className="w-full z-50 bg-white dark:bg-black dark:text-white border-b-4 border-black dark:border-white">
+    <header className="w-full z-50 bg-background/80 backdrop-blur-md border-b border-foreground/10 sticky top-0">
       <Alert />
       <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-        <Link to="/" className="font-bold text-2xl font-mono">
-          {orgData && !loading ? orgData.name : "Foxware-Den"}
+        <Link to="/" className="font-bold text-2xl font-mono group">
+          <span className="bg-gradient-to-r from-vibrant-purple to-vibrant-teal bg-clip-text text-transparent group-hover:from-vibrant-teal group-hover:to-vibrant-amber transition-all duration-500">
+            {orgData && !loading ? orgData.name : "Foxware-Den"}
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
           <DropdownProps label="Products" items={productRoutes} />
           <Link
             to="/about"
-            className="font-medium hover:underline underline-offset-4"
+            className="font-medium text-foreground hover:text-vibrant-purple transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-vibrant-purple hover:after:w-full after:transition-all after:duration-300"
           >
             About
           </Link>
-          {/* <Link to="#" className="font-medium hover:underline underline-offset-4">
-            Contact
-          </Link> */}
         </nav>
 
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-3">
           <ThemeToggle />
-          <button
+          <a
+            href={orgData ? orgData.html_url : "https://github.com/FoxwareDen"}
+            target="_blank"
             aria-label="org repo link"
-            className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center"
+            className="h-10 w-10 rounded-lg border border-foreground/10 bg-background hover:bg-vibrant-purple/10 hover:border-vibrant-purple/30 flex items-center justify-center transition-all duration-300 group"
           >
-            <a
-              href={
-                orgData ? orgData.html_url : "https://github.com/FoxwareDen"
-              }
-              target="_blank"
-            >
-              <GitFork className="h-5 w-5" />
-            </a>
-          </button>
+            <GitFork className="h-5 w-5 text-foreground group-hover:text-vibrant-purple transition-colors" />
+          </a>
           <button
             aria-label={authenticated ? "Dashboard link" : "Login link"}
-            className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center"
+            className="h-10 w-10 rounded-lg border border-foreground/10 bg-background hover:bg-vibrant-teal/10 hover:border-vibrant-teal/30 flex items-center justify-center transition-all duration-300 group"
             onClick={handleClickButton}
           >
             {authenticated ? (
-              <NotepadTextIcon className="h-5 w-5" />
+              <NotepadTextIcon className="h-5 w-5 text-foreground group-hover:text-vibrant-teal transition-colors" />
             ) : (
-              <User2 className="h-5 w-5" />
+              <User2 className="h-5 w-5 text-foreground group-hover:text-vibrant-teal transition-colors" />
             )}
           </button>
           {authenticated && (
             <button
               aria-label="log out button"
-              className="h-10 w-10 rounded-none border-2 border-black dark:border-white flex items-center justify-center"
+              className="h-10 w-10 rounded-lg border border-foreground/10 bg-background hover:bg-vibrant-pink/10 hover:border-vibrant-pink/30 flex items-center justify-center transition-all duration-300 group"
               onClick={signOut}
             >
-              <LogOutIcon />
+              <LogOutIcon className="h-5 w-5 text-foreground group-hover:text-vibrant-pink transition-colors" />
             </button>
           )}
         </div>
@@ -127,56 +120,50 @@ function Header() {
         {/* Mobile Navigation */}
         <button
           aria-label="toggle navbar menu"
-          className="md:hidden"
+          className="md:hidden h-10 w-10 rounded-lg border border-foreground/10 flex items-center justify-center"
           onClick={() => setIsMenuOpen(true)}
         >
-          <Menu className="h-6 w-6" />
+          <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle menu</span>
         </button>
 
         {isMenuOpen && (
-          <div className="fixed inset-0 z-50 bg-white dark:bg-black">
+          <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-lg animate-fade-in-up">
             <div className="h-full flex flex-col">
-              <div className="h-20 border-b-4 border-black dark:border-white flex items-center px-6 justify-between">
-                <span className="font-bold text-2xl font-mono">
+              <div className="h-20 border-b border-foreground/10 flex items-center px-6 justify-between">
+                <span className="font-bold text-2xl font-mono bg-gradient-to-r from-vibrant-purple to-vibrant-teal bg-clip-text text-transparent">
                   {orgData && !loading ? orgData.name : "Foxware-Den"}
                 </span>
                 <button
                   aria-label="close navbar menu"
                   onClick={() => setIsMenuOpen(false)}
+                  className="h-10 w-10 rounded-lg border border-foreground/10 flex items-center justify-center hover:bg-foreground/5 transition-colors"
                 >
-                  <X className="h-6 w-6" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
               <nav className="flex flex-col py-8 px-6 space-y-6 overflow-y-auto">
                 <Link
                   to="/"
-                  className="text-2xl font-medium"
+                  className="text-2xl font-medium text-foreground hover:text-vibrant-purple transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Home
                 </Link>
                 <DropdownProps
-                  className="text-1xl font-bold"
+                  className="text-xl font-bold"
                   items={productRoutes}
                   label="PRODUCTS"
                 />
                 <Link
                   to="/about"
-                  className="text-2xl font-medium"
+                  className="text-2xl font-medium text-foreground hover:text-vibrant-teal transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   About
                 </Link>
-                {/* <Link
-                  to="#"
-                  className="text-2xl font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Contact
-                </Link> */}
               </nav>
-              <div className="mt-auto border-t-4 border-black dark:border-white p-6 flex flex-col space-y-4">
+              <div className="mt-auto border-t border-foreground/10 p-6 flex flex-col space-y-4">
                 <a
                   href={
                     orgData ? orgData.html_url : "https://github.com/FoxwareDen"
@@ -185,45 +172,50 @@ function Header() {
                 >
                   <button
                     aria-label="link to orgs repo"
-                    className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
+                    className="w-full border border-foreground/10 rounded-lg h-14 flex items-center justify-center gap-2 hover:bg-vibrant-purple/10 hover:border-vibrant-purple/30 transition-all group"
                   >
-                    <GitFork className="h-5 w-5" />
-                    GitHub Repo
+                    <GitFork className="h-5 w-5 group-hover:text-vibrant-purple transition-colors" />
+                    <span className="group-hover:text-vibrant-purple transition-colors">
+                      GitHub Repo
+                    </span>
                   </button>
                 </a>
-                <button
-                  aria-label="toggle theme button"
-                  className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
-                >
-                  <ThemeToggle className="border-0" />
-                  Toggle Theme
-                </button>
+                <div className="w-full border border-foreground/10 rounded-lg h-14 flex items-center justify-center gap-2">
+                  <ThemeToggle className="border-0 h-full w-full" />
+                  <span>Toggle Theme</span>
+                </div>
 
                 <button
                   aria-label={authenticated ? "Dashboard link" : "Login link"}
-                  className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
+                  className="w-full border border-foreground/10 rounded-lg h-14 flex items-center justify-center gap-2 hover:bg-vibrant-teal/10 hover:border-vibrant-teal/30 transition-all group"
                   onClick={handleClickButton}
                 >
                   {authenticated ? (
                     <>
-                      <NotepadTextIcon className="h-5 w-5" />
-                      Dashboard
+                      <NotepadTextIcon className="h-5 w-5 group-hover:text-vibrant-teal transition-colors" />
+                      <span className="group-hover:text-vibrant-teal transition-colors">
+                        Dashboard
+                      </span>
                     </>
                   ) : (
                     <>
-                      <User2 className="h-5 w-5" />
-                      Login / Sign Up
+                      <User2 className="h-5 w-5 group-hover:text-vibrant-teal transition-colors" />
+                      <span className="group-hover:text-vibrant-teal transition-colors">
+                        Login / Sign Up
+                      </span>
                     </>
                   )}
                 </button>
                 {authenticated && (
                   <button
                     aria-label="log out button"
-                    className="w-full border-2 border-black dark:border-white rounded-none h-14 flex items-center justify-center gap-2"
+                    className="w-full border border-foreground/10 rounded-lg h-14 flex items-center justify-center gap-2 hover:bg-vibrant-pink/10 hover:border-vibrant-pink/30 transition-all group"
                     onClick={signOut}
                   >
-                    <LogOutIcon />
-                    Logout
+                    <LogOutIcon className="h-5 w-5 group-hover:text-vibrant-pink transition-colors" />
+                    <span className="group-hover:text-vibrant-pink transition-colors">
+                      Logout
+                    </span>
                   </button>
                 )}
               </div>
