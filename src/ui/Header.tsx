@@ -128,8 +128,8 @@ function Header() {
         </button>
 
         {isMenuOpen && (
-          <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-lg animate-fade-in-up">
-            <div className="h-full flex flex-col">
+          <div className="fixed inset-0 z-50 bg-background animate-fade-in-up">
+            <div className="h-full flex flex-col bg-background">
               <div className="h-20 border-b border-foreground/10 flex items-center px-6 justify-between">
                 <span className="font-bold text-2xl font-mono bg-gradient-to-r from-vibrant-purple to-vibrant-teal bg-clip-text text-transparent">
                   {orgData && !loading ? orgData.name : "Foxware-Den"}
