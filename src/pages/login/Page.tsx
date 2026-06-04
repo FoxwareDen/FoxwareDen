@@ -2,7 +2,7 @@ import type React from "react";
 
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { getAllowedList, signInWithEmail, signUpWithEmail } from "../../api/db";
 import BrutalistSwitch from "../../ui/Switch";
 import { Session, User } from "@supabase/supabase-js";
@@ -37,7 +37,6 @@ function LoginPage() {
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Handle email login logic here
     let success: { user: User | null; session: Session | null } | null = null;
 
     try {
@@ -66,48 +65,54 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background geometric shapes */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-[#FF5252] rotate-12 z-10"></div>
-      <div className="absolute bottom-20 right-10 w-40 h-40 bg-[#FFD60A] -rotate-12 z-10"></div>
-      <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-[#4A9DFF] rotate-45 z-10 opacity-50"></div>
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-20 left-10 w-32 h-32 bg-vibrant-pink/30 rounded-2xl rotate-12 blur-xl animate-float" />
+      <div className="absolute bottom-20 right-10 w-40 h-40 bg-vibrant-amber/30 rounded-2xl -rotate-12 blur-xl animate-float [animation-delay:1s]" />
+      <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-vibrant-teal/30 rounded-2xl rotate-45 blur-xl animate-float [animation-delay:2s]" />
 
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md animate-scale-in">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold font-mono mb-2">
-            {mode == "signIn" ? "LOGIN" : "SIGNUP"}
+          <h2 className="text-3xl font-bold font-mono mb-2 text-foreground">
+            {mode == "signIn" ? "WELCOME BACK" : "CREATE ACCOUNT"}
           </h2>
+          <p className="text-muted-foreground">
+            {mode == "signIn" ? "Sign in to your dashboard" : "Join FoxwareDen today"}
+          </p>
         </div>
 
         {/* Login Form Container */}
-        <div className="border-4 border-black dark:border-white transform rotate-1 mb-6">
-          <div className="bg-white dark:bg-black p-8 transform -rotate-1">
+        <div className="border border-foreground/10 rounded-2xl overflow-hidden bg-card shadow-xl">
+          <div className="h-1.5 bg-gradient-to-r from-vibrant-purple via-vibrant-teal to-vibrant-amber" />
+          <div className="p-8">
             {/* Email Login Form */}
             <form onSubmit={handleEmailLogin} className="space-y-6">
               {/* Email Field */}
               {signUpText && (
-                <h2 className="text-2xl font-bold font-mono mb-2">
-                  {signUpText}
-                </h2>
+                <div className="p-4 bg-vibrant-teal/10 border border-vibrant-teal/20 rounded-xl">
+                  <h2 className="text-lg font-mono text-vibrant-teal">
+                    {signUpText}
+                  </h2>
+                </div>
               )}
-              <div>
+              <div className="animate-fade-in-up opacity-0 [animation-delay:0.1s]">
                 <label
                   htmlFor="email"
-                  className="block font-mono font-bold mb-2"
+                  className="block font-mono font-bold mb-2 text-foreground"
                 >
                   EMAIL
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <input
                     type="email"
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`w-full pl-10 pr-4 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white ${
+                    className={`w-full pl-10 pr-4 py-3 border border-foreground/10 rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple transition-all ${
                       allowedEmails.includes(email) &&
-                      "border-green-500 border-b-2 dark:border-green-500"
+                      "border-vibrant-teal focus:ring-vibrant-teal/50"
                     }`}
                     placeholder="your@email.com"
                     required
@@ -116,29 +121,29 @@ function LoginPage() {
               </div>
 
               {/* Password Field */}
-              <div>
+              <div className="animate-fade-in-up opacity-0 [animation-delay:0.2s]">
                 <label
                   htmlFor="password"
-                  className="block font-mono font-bold mb-2"
+                  className="block font-mono font-bold mb-2 text-foreground"
                 >
                   PASSWORD
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <input
                     type={showPassword ? "text" : "password"}
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-12 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
-                    placeholder="••••••••"
+                    className="w-full pl-10 pr-12 py-3 border border-foreground/10 rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple transition-all"
+                    placeholder="Enter your password"
                     required
                   />
                   <button
                     aria-label="reveal password button"
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-black dark:hover:text-white"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-vibrant-purple transition-colors"
                   >
                     {showPassword ? (
                       <EyeOff className="h-5 w-5" />
@@ -154,73 +159,45 @@ function LoginPage() {
                 disabled={loading}
                 type="submit"
                 aria-label="submit button"
-                className={`w-full py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white ${
-                  loading && "opacity-50"
+                className={`w-full py-3 bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white rounded-xl hover:shadow-lg hover:shadow-vibrant-purple/25 transition-all duration-300 hover:-translate-y-0.5 font-mono font-bold animate-fade-in-up opacity-0 [animation-delay:0.3s] ${
+                  loading && "opacity-50 cursor-not-allowed"
                 }`}
               >
                 {mode === "signIn" ? "SIGN IN" : "SIGN UP"}
               </button>
-              <div className="flex gap-4 items-center">
+
+              <div className="flex gap-4 items-center justify-between animate-fade-in-up opacity-0 [animation-delay:0.4s]">
                 <label
-                  htmlFor="password"
-                  className="block font-mono font-bold mb-2"
+                  htmlFor="mode-switch"
+                  className="block font-mono text-sm text-muted-foreground"
                 >
-                  Switch to {mode === "signIn" ? "signUp" : "signIn"}
+                  {mode === "signIn" ? "Need an account?" : "Already have an account?"}
                 </label>
-                <BrutalistSwitch
-                  disabled={loading}
-                  checked={mode === "signUp"}
-                  onCheckedChange={() => {
-                    setMode((prev) => (prev == "signIn" ? "signUp" : "signIn"));
-                  }}
-                />
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    {mode === "signIn" ? "Sign Up" : "Sign In"}
+                  </span>
+                  <BrutalistSwitch
+                    disabled={loading}
+                    checked={mode === "signUp"}
+                    onCheckedChange={() => {
+                      setMode((prev) => (prev == "signIn" ? "signUp" : "signIn"));
+                    }}
+                  />
+                </div>
               </div>
             </form>
-
-            {/* TODO: add google auth later
-            <div className="relative my-8">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t-2 border-black dark:border-white"></div>
-              </div>
-              <div className="relative flex justify-center">
-                <span className="px-4 bg-white dark:bg-black font-mono font-bold">
-                  OR
-                </span>
-              </div>
-            </div>
-
-            <button
-            type="button"
-            onClick={handleGoogleLogin}
-            className="w-full py-3 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors font-mono font-bold flex items-center justify-center gap-2"
-            >
-              <svg className="h-5 w-5" viewBox="0 0 24 24">
-                <path
-                  fill="currentColor"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="currentColor"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="currentColor"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                />
-                <path
-                  fill="currentColor"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                />
-              </svg>
-              CONTINUE WITH GOOGLE
-            </button> */}
           </div>
         </div>
 
         {/* Back to Home */}
-        <div className="text-center mt-6">
-          <Link to="/" className="font-mono text-sm hover:underline">
-            ← BACK TO HOME
+        <div className="text-center mt-6 animate-fade-in-up opacity-0 [animation-delay:0.5s]">
+          <Link 
+            to="/" 
+            className="inline-flex items-center gap-2 font-mono text-sm text-muted-foreground hover:text-vibrant-purple transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            BACK TO HOME
           </Link>
         </div>
       </div>

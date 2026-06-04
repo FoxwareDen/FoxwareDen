@@ -69,10 +69,11 @@ export default function BrutalistSwitch({
         onClick={handleToggle}
         className={`
           relative ${sizeConfig.container}
-          border-2 border-black dark:border-white
-          transition-colors duration-200
-          ${checked ? "bg-black dark:bg-white" : "bg-white dark:bg-black"}
-          ${disabled ? "cursor-not-allowed" : "cursor-pointer"}
+          border border-foreground/20
+          rounded-full
+          transition-all duration-300
+          ${checked ? "bg-gradient-to-r from-vibrant-purple to-vibrant-teal" : "bg-foreground/10"}
+          ${disabled ? "cursor-not-allowed" : "cursor-pointer hover:border-vibrant-purple/50"}
           ${className}
         `}
       >
@@ -81,16 +82,18 @@ export default function BrutalistSwitch({
           className={`
             absolute top-1/2 -translate-y-1/2 left-0.5
             ${sizeConfig.handle}
-            transition-transform duration-200
+            transition-all duration-300
             ${checked ? sizeConfig.translate : "translate-x-0"}
-            ${checked ? "bg-white dark:bg-black" : "bg-black dark:bg-white"}
-            border-2 border-black dark:border-white
+            bg-white
+            rounded-full
+            shadow-md
+            ${checked ? "shadow-vibrant-purple/30" : ""}
           `}
         />
       </button>
 
       {label && (
-        <span className="font-mono font-medium select-none">{label}</span>
+        <span className="font-mono font-medium select-none text-foreground">{label}</span>
       )}
     </label>
   );

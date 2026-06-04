@@ -28,7 +28,7 @@ function RootLayout() {
         image: "https://foxwareden.co.za/favicon-96x96.png",
         url: "https://foxwareden.co.za",
       }} />
-      <div className="min-h-screen bg-white dark:bg-black dark:text-white">
+      <div className="min-h-screen bg-background text-foreground">
         <ScrollToTop />
         <Header />
         <Outlet />

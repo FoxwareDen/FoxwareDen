@@ -19,31 +19,31 @@ function ErrorSection({
 }: ErrorProps) {
   const colors = {
     error: {
-      border: "border-black dark:border-white",
-      bg: "bg-[#FF3A3A] dark:bg-[#FF5252]",
-      text: "text-black dark:text-black",
+      gradient: "from-vibrant-pink to-vibrant-purple",
+      icon: "text-white",
+      border: "border-vibrant-pink/30",
     },
     warning: {
-      border: "border-black dark:border-white",
-      bg: "bg-[#FFD60A] dark:bg-[#FFE03A]",
-      text: "text-black dark:text-black",
+      gradient: "from-vibrant-amber to-vibrant-pink",
+      icon: "text-white",
+      border: "border-vibrant-amber/30",
     },
   };
 
   const containerClasses = fullPage
-    ? "fixed inset-0 flex items-center justify-center p-4 z-50 bg-white dark:bg-black"
+    ? "fixed inset-0 flex items-center justify-center p-4 z-50 bg-background/80 backdrop-blur-sm"
     : "w-full h-full min-h-[200px] flex items-center justify-center p-4";
 
   return (
     <div className={containerClasses}>
       <div
-        className={`border-4 ${colors[type].border} max-w-md w-full transform rotate-1 overflow-hidden`}
+        className={`border ${colors[type].border} max-w-md w-full overflow-hidden rounded-2xl bg-card shadow-xl animate-scale-in`}
       >
         {/* Header */}
         <div
-          className={`${colors[type].bg} p-4 flex items-center justify-between`}
+          className={`bg-gradient-to-r ${colors[type].gradient} p-4 flex items-center justify-between`}
         >
-          <div className="flex items-center">
+          <div className="flex items-center text-white">
             <AlertTriangle className="h-6 w-6 mr-2" />
             <h3 className="font-mono font-bold text-xl">{title}</h3>
           </div>
@@ -51,7 +51,7 @@ function ErrorSection({
             <button
               aria-label="close alert"
               onClick={onDismiss}
-              className="h-8 w-8 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors"
+              className="h-8 w-8 rounded-lg bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors text-white"
             >
               <X className="h-5 w-5" />
             </button>
@@ -59,8 +59,8 @@ function ErrorSection({
         </div>
 
         {/* Body */}
-        <div className="bg-white dark:bg-black p-6 border-t-4 border-black dark:border-white">
-          <p className="font-mono mb-6">{message}</p>
+        <div className="p-6">
+          <p className="font-mono text-muted-foreground mb-6">{message}</p>
 
           {/* Actions */}
           <div className="flex justify-end gap-4">
@@ -68,7 +68,7 @@ function ErrorSection({
               <button
                 aria-label="retry button"
                 onClick={onRetry}
-                className="px-4 py-2 border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white transition-colors flex items-center"
+                className="px-4 py-2 bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white rounded-lg hover:shadow-lg hover:shadow-vibrant-purple/25 transition-all duration-300 hover:-translate-y-0.5 flex items-center font-mono"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 RETRY
@@ -77,13 +77,8 @@ function ErrorSection({
           </div>
         </div>
 
-        {/* Decorative elements */}
-        <div className="h-2 bg-black dark:bg-white"></div>
-        <div className="flex">
-          <div className="h-4 w-1/3 bg-black dark:bg-white"></div>
-          <div className="h-4 w-1/3"></div>
-          <div className="h-4 w-1/3 bg-black dark:bg-white"></div>
-        </div>
+        {/* Decorative gradient bar */}
+        <div className={`h-1 bg-gradient-to-r ${colors[type].gradient}`} />
       </div>
     </div>
   );
