@@ -1,9 +1,9 @@
 import MemberCard from "./MemberCard";
 import { useEffect, useState } from "react";
-import { useOrg } from "../../../store/orgHook";
-import { getWithAuth, User } from "../../../api/requests";
-import Loading from "../../../ui/Loading";
-import ErrorSection from "../../../ui/ErrorSection";
+import { useOrg } from "../../store/orgHook";
+import { getWithAuth, User } from "../../api/requests";
+import Loading from "./Loading";
+import ErrorSection from "./ErrorSection";
 
 type TeamMembers = {
   name: string;

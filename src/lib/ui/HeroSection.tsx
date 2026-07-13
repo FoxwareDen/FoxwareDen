@@ -1,4 +1,4 @@
-import { useOrg } from "../../../store/orgHook";
+import { useOrg } from "../../store/orgHook";
 import { ArrowRight, Code, Globe, Sparkles } from "lucide-react";
 
 function HeroSection() {

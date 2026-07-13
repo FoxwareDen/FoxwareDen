@@ -1,7 +1,7 @@
 import { Edit, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getRepos, Repo } from "../../../api/dashboard";
-import { MetaData } from "../../../api/db";
+import { getRepos, Repo } from "../../api/dashboard";
+import { MetaData } from "../../api/db";
 
 interface Project extends Repo, MetaData {}
 

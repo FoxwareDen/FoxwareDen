@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import { Review } from "../api/reviews";
+import { Review } from "../../api/reviews";
 
 export interface BrutalistReviewCardProps extends Partial<Review> {
   rating: number;

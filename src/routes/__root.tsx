@@ -1,12 +1,15 @@
-import { Outlet } from "react-router";
-import Header from "./lib/ui/Header";
-import Footer from "./lib/ui/Footer";
-import { ThemeProvider } from "./lib/ThemeProvider";
-import ScrollToTop from "./lib/ui/ScrollToTop";
-import SEOProvider from "./lib/SEOProvider";
+import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { ThemeProvider } from '../lib/ThemeProvider';
+import SEOProvider from '../lib/SEOProvider';
+import Header from '../lib/ui/Header';
+import Footer from '../lib/ui/Footer';
 
-function RootLayout() {
+export const Route = createRootRoute({
+  component: RootComponent,
+})
 
+function RootComponent() {
+  
   return (
     <ThemeProvider>
       <SEOProvider product={{
@@ -29,7 +32,7 @@ function RootLayout() {
         url: "https://foxwareden.co.za",
       }} />
       <div className="min-h-screen bg-background text-foreground">
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
         <Header />
         <Outlet />
         <Footer />
@@ -37,4 +40,3 @@ function RootLayout() {
     </ThemeProvider>
   );
 }
-export default RootLayout;

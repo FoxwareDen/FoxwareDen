@@ -1,9 +1,13 @@
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowRight, Code, Users, Lightbulb, Target, Rocket, Heart } from "lucide-react";
-import { Link } from "react-router";
-import Services from "../../ui/Services";
+import Services from '../lib/ui/Services';
 
-export default function AboutPage() {
-  return (
+export const Route = createFileRoute('/about')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
+   return (
     <div className="bg-background">
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 py-20 md:py-32 overflow-hidden">

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import BrutalistSwitch from "../../../ui/Switch";
-import { createRepo, Repo, Status } from "../../../api/dashboard";
+import BrutalistSwitch from "./Switch";
+import { createRepo, Repo, Status } from "../../api/dashboard";
 
 function FormData() {
   const [loading, setLoading] = useState(false);

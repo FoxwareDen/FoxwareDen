@@ -1,12 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router";
-import { getRepos, Repo, Status } from "../../api/dashboard";
-import Loading from "../../ui/Loading";
-import NotFound from "../404/Page";
-import { Download, Sparkles, Zap, Shield } from "lucide-react";
-import { getDownload, getProject } from "../../api/requests";
+import { createFileRoute, useLocation } from '@tanstack/react-router'
+import Loading from '../lib/ui/Loading';
+import { useEffect, useMemo, useState } from 'react';
+import { getRepos, Repo, Status } from '../api/dashboard';
+import NotFound from '../pages/404/Page';
+import { getDownload, getProject } from '../api/requests';
+import { Download, Shield, Sparkles, Zap } from 'lucide-react';
 
-export default function Products() {
+export const Route = createFileRoute('/products')({
+  component: RouteComponent,
+})
+
+
+function RouteComponent() {
   const { pathname } = useLocation();
   const [loading, setLoading] = useState(false);
   const [productsData, setProductsData] = useState<Record<string, Repo>>({});
@@ -49,6 +54,7 @@ export default function Products() {
     </>
   );
 }
+
 
 function Page({ repo }: { repo: Repo }) {
   const colors: Record<Status, string> = {
@@ -205,3 +211,4 @@ function Page({ repo }: { repo: Repo }) {
     </div>
   );
 }
+

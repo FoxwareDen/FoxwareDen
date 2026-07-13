@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import {
-  createReview,
-  invalidateReviewPortal,
-  validateReviewPortal,
-} from "../../api/reviews";
-import Loading from "../../ui/Loading";
-import ErrorSection from "../../ui/ErrorSection";
-import { Star } from "lucide-react";
+import { createFileRoute, useParams } from '@tanstack/react-router'
+import { Star } from 'lucide-react';
+import ErrorSection from '../lib/ui/ErrorSection';
+import Loading from '../lib/ui/Loading';
+import { createReview, invalidateReviewPortal, validateReviewPortal } from '../api/reviews';
+import { useEffect, useState } from 'react';
 
-export default function ReviewFormPage() {
-  const { token, name } = useParams();
+export const Route = createFileRoute('/reviews')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
+  const { token, name } = useParams({from: "/"});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<{
     message: string;
@@ -39,8 +39,7 @@ export default function ReviewFormPage() {
         if (!result) {
           setError({ message: "failed portal invalid", type: "error" });
           return;
-        }
-      } catch (error) {
+        }      } catch (error) {
         console.error(error);
         setError({ message: "failed portal invalid", type: "error" });
       } finally {
@@ -86,7 +85,7 @@ export default function ReviewFormPage() {
         <div className="min-h-[720px] flex items-center justify-center">
           <ErrorSection
             message="portal validation has expired or been removed"
-            title={error.message}
+           title={error.message}
             type={error.type}
           />
         </div>

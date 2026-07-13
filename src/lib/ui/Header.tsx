@@ -7,14 +7,14 @@ import {
   User2,
   X,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router";
 import Alert from "./Alert";
-import { useOrg } from "../store/orgHook";
+import { useOrg } from "../../store/orgHook";
 import ThemeToggle from "./ThemeToggle";
-import { useUserSession } from "../store/auth";
-import { signOutUser } from "../api/db";
+import { useUserSession } from "../../store/auth";
+import { signOutUser } from "../../api/db";
 import DropdownProps, { DropdownItem } from "./DropDown";
-import { getRepos } from "../api/dashboard";
+import { getRepos } from "../../api/dashboard";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 function Header() {
   const navigate = useNavigate();

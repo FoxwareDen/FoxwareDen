@@ -1,14 +1,16 @@
-import type React from "react";
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import BrutalistSwitch from '../lib/ui/Switch';
+import { ArrowLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useUserSession } from '../store/auth';
+import { getAllowedList, signInWithEmail, signUpWithEmail } from '../api/db';
+import { Session, User } from '@supabase/supabase-js';
 
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
-import { getAllowedList, signInWithEmail, signUpWithEmail } from "../../api/db";
-import BrutalistSwitch from "../../ui/Switch";
-import { Session, User } from "@supabase/supabase-js";
-import { useUserSession } from "../../store/auth";
+export const Route = createFileRoute('/login')({
+  component: RouteComponent,
+})
 
-function LoginPage() {
+function RouteComponent() {
   const [signUpText, setSignUpText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { setSession } = useUserSession();
@@ -192,7 +194,7 @@ function LoginPage() {
 
         {/* Back to Home */}
         <div className="text-center mt-6 animate-fade-in-up opacity-0 [animation-delay:0.5s]">
-          <Link 
+          <Link
             to="/" 
             className="inline-flex items-center gap-2 font-mono text-sm text-muted-foreground hover:text-vibrant-purple transition-colors"
           >
@@ -204,5 +206,3 @@ function LoginPage() {
     </div>
   );
 }
-
-export default LoginPage;

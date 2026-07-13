@@ -1,14 +1,19 @@
-import { useEffect } from "react";
-import { useOrg } from "../../store/orgHook";
-import { useAlert } from "../../ui/Alert";
-import Services from "../../ui/Services";
-import HeroSection from "./ui/HeroSection";
-import ReviewSection from "./ui/ReviewsSection";
-// import TeamMembersSection from "./ui/TeamMembersSection";
-import TechnologyStacksSection from "./ui/TechnologyStacksSection";
-import { getOrgMetaData, heathCheck } from "../../api/requests";
+import { createFileRoute } from '@tanstack/react-router'
+import { useOrg } from '../store/orgHook';
+import { useEffect } from 'react';
+import { getOrgMetaData, heathCheck } from '../api/requests';
+import { useAlert } from '../lib/ui/Alert';
+import HeroSection from '../lib/ui/HeroSection';
+import Services from '../lib/ui/Services';
+import ReviewSection from '../lib/ui/ReviewsSection';
+import TeamMembersSection from '../lib/ui/TeamMembersSection';
+import TechnologyStacksSection from '../lib/ui/TechnologyStacksSection';
 
-function Home() {
+export const Route = createFileRoute('/')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
   const { setData, setLoading, setError } = useOrg();
   const { setAlert } = useAlert();
 
@@ -50,10 +55,8 @@ function Home() {
       <HeroSection />
       <Services />
       <ReviewSection />
-      {/* <TeamMembersSection /> */}
+      <TeamMembersSection />
       <TechnologyStacksSection />
     </>
   );
 }
-
-export default Home;

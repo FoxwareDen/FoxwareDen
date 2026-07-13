@@ -1,7 +1,7 @@
 import { Star, GitFork, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getWithAuth } from "../../../api/requests";
-import { useAlert } from "../../../ui/Alert";
+import { getWithAuth } from "../../api/requests";
+import { useAlert } from "./Alert";
 
 type User = {
   id: number;

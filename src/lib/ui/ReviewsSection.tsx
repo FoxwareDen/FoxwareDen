@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import BrutalistReviewCard, {
   BrutalistReviewCardProps,
-} from "../../../ui/ReviewCard";
-import { getReviews } from "../../../api/reviews";
+} from "./ReviewCard";
+import { getReviews } from "../../api/reviews";
 import { MessageSquare, TrendingUp, Star } from "lucide-react";
 
 export default function ReviewSection() {

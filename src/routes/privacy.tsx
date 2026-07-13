@@ -1,4 +1,10 @@
-export default function PrivacyPage() {
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/privacy')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
       {/* Main Content */}

@@ -3,10 +3,10 @@ import { Link } from "react-router";
 import ProjectCard from "./ProjectCard";
 import { type ProjectCardProps } from "./ProjectCard";
 import { useEffect, useState } from "react";
-import { useOrg } from "../../../store/orgHook";
-import Loading from "../../../ui/Loading";
-import ErrorSection from "../../../ui/ErrorSection";
-import { getRepos } from "../../../api/requests";
+import { useOrg } from "../../store/orgHook";
+import Loading from "./Loading";
+import ErrorSection from "./ErrorSection";
+import { getRepos } from "../../api/requests";
 
 function ProjectsSection() {
   const colors = [

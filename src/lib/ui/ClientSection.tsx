@@ -1,7 +1,7 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
-import { createReviewPortal } from "../../../api/reviews";
-import { useAlert } from "../../../ui/Alert";
+import { createReviewPortal } from "../../api/reviews";
+import { useAlert } from "./Alert";
 
 export default function ClientSection() {
   const { setAlert } = useAlert();

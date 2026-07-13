@@ -1,6 +1,11 @@
-import { ReactNode } from "react";
+import { createFileRoute } from '@tanstack/react-router'
+import { ReactNode } from 'react';
 
-export default function TermsPage() {
+export const Route = createFileRoute('/terms')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
   return (
     <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
       {/* Main Content */}
@@ -66,7 +71,7 @@ export default function TermsPage() {
         </div>
       </main>
     </div>
-  );
+  );  
 }
 
 function TermsSection({
@@ -116,3 +121,4 @@ function TermsList({
     </div>
   );
 }
+
