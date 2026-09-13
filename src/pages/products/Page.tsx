@@ -1,39 +1,45 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation } from "@tanstack/react-router";
-import { getRepos, Repo, Status } from "../../api/dashboard";
+import { Link, useLocation } from "@tanstack/react-router";
 import Loading from "../../ui/Loading";
 import NotFound from "../404/Page";
 import { Download, Sparkles, Zap, Shield } from "lucide-react";
-import { getDownload, getProject } from "../../api/requests";
+import { DownloadAsset, getDownload, getProducts, Product } from "../../api/requests";
 
 export default function Products() {
   const { pathname } = useLocation();
-  const [loading, setLoading] = useState(false);
-  const [productsData, setProductsData] = useState<Record<string, Repo>>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [productsData, setProductsData] = useState<Record<string, Product>>({});
 
   useEffect(() => {
     const fetchRepos = async () => {
-      setLoading(true);
-      const results = await getRepos();
+      try {
+        const results = await getProducts();
 
-      if (!results) return;
+        const products = results.reduce(
+          (prev: Record<string, Product>, curr: Product) => {
+            prev[curr.title.trim().toLowerCase()] = curr;
+            return prev;
+          },
+          {}
+        );
 
-      const products = results.reduce(
-        (prev: Record<string, Repo>, curr: Repo) => {
-          const newData = prev;
-
-          newData[curr.title.toLowerCase()] = curr;
-          return newData;
-        },
-        {}
-      );
-
-      setProductsData(products);
-
-      setLoading(false);
+        setProductsData(products);
+      } catch (error) {
+        console.error("Failed to load GitHub products:", error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchRepos();
   }, []);
+
+  const product = productsData[pathname.replace(/^\/+|\/+$/g, "").toLowerCase()];
+
+  if (pathname === "/products") {
+    return <ProductIndex loading={loading} error={error} products={Object.values(productsData)} />;
+  }
 
   return (
     <>
@@ -41,8 +47,12 @@ export default function Products() {
         <div className="min-h-[340px] py-20">
           <Loading text="getting route" size="full" />
         </div>
-      ) : productsData[pathname.replace("/", "")] ? (
-        <Page repo={productsData[pathname.replace("/", "")]} />
+      ) : error ? (
+        <div className="min-h-[340px] py-20 text-center">
+          <p className="text-muted-foreground">Products are temporarily unavailable.</p>
+        </div>
+      ) : product ? (
+        <Page repo={product} />
       ) : (
         <NotFound />
       )}
@@ -50,8 +60,103 @@ export default function Products() {
   );
 }
 
-function Page({ repo }: { repo: Repo }) {
-  const colors: Record<Status, string> = {
+function ProductIndex({
+  loading,
+  error,
+  products,
+}: {
+  loading: boolean;
+  error: boolean;
+  products: Product[];
+}) {
+  if (loading) {
+    return (
+      <div className="min-h-[340px] py-20">
+        <Loading text="getting products" size="full" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-[340px] py-20 text-center">
+        <p className="text-muted-foreground">Products are temporarily unavailable.</p>
+      </div>
+    );
+  }
+
+  return (
+    <main className="container mx-auto px-4 py-16">
+      <div className="mb-10">
+        <p className="mb-2 font-mono text-sm uppercase tracking-widest text-vibrant-teal">
+          FoxwareDen releases
+        </p>
+        <h1 className="text-4xl font-bold font-mono text-foreground">Products</h1>
+      </div>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => (
+          <Link
+            key={product.title}
+            to={`/${product.title.trim().toLowerCase()}`}
+            className="group relative flex min-h-[300px] flex-col overflow-hidden rounded-2xl border border-vibrant-purple/30 bg-gradient-to-br from-vibrant-purple/15 via-card to-vibrant-teal/15 p-6 shadow-lg shadow-vibrant-purple/10 transition duration-300 hover:-translate-y-1 hover:border-vibrant-pink/60 hover:shadow-xl hover:shadow-vibrant-pink/20"
+          >
+            <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-vibrant-purple via-vibrant-pink to-vibrant-amber" />
+            <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-vibrant-purple/10 blur-3xl transition group-hover:bg-vibrant-teal/15" />
+            <div className="relative flex flex-1 flex-col">
+              <div className="mb-5">
+                <span className="inline-block rounded-full bg-vibrant-teal px-4 py-2 font-mono text-xs font-bold uppercase tracking-wide text-white shadow-lg">
+                {product.status}
+                </span>
+              </div>
+
+              <h2 className="mb-4 text-4xl font-bold leading-tight font-mono text-transparent bg-gradient-to-r from-vibrant-purple via-vibrant-pink to-vibrant-amber bg-clip-text transition-transform group-hover:scale-[1.02]">
+                {product.title}
+              </h2>
+
+              <p className="line-clamp-3 text-base leading-6 text-muted-foreground">
+                {getShortDescription(product.description)}
+              </p>
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                <span className="rounded-full bg-vibrant-purple/10 px-3 py-1.5 font-mono text-xs font-medium text-vibrant-purple">
+                  Fast
+                </span>
+                <span className="rounded-full bg-vibrant-teal/10 px-3 py-1.5 font-mono text-xs font-medium text-vibrant-teal">
+                  Secure
+                </span>
+                <span className="rounded-full bg-vibrant-amber/10 px-3 py-1.5 font-mono text-xs font-medium text-vibrant-amber">
+                  Modern
+                </span>
+              </div>
+
+              <span className="mt-auto pt-6 text-sm font-bold text-vibrant-purple">
+                View product <span aria-hidden="true">-&gt;</span>
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </main>
+  );
+}
+
+function getShortDescription(markdown: string) {
+  const plainText = markdown
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/[#>*_`~\[\]()]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return plainText.length > 150
+    ? `${plainText.slice(0, 147).trimEnd()}...`
+    : plainText;
+}
+
+function Page({ repo }: { repo: Product }) {
+  const [assets, setAssets] = useState<DownloadAsset[]>([]);
+  const [downloadLoading, setDownloadLoading] = useState(true);
+  const colors: Record<Product["status"], string> = {
     active: "bg-vibrant-teal text-white",
     inactive: "bg-vibrant-pink text-white",
     pending: "bg-vibrant-amber text-white",
@@ -65,27 +170,11 @@ function Page({ repo }: { repo: Repo }) {
   );
 
   useEffect(() => {
-    const fetchRepoData = async () => {
-      try {
-        const data = await getProject(repo.title.toLocaleLowerCase());
-        console.log("repo page", data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchRepoData();
-  }, []);
-
-  const handleDownload = async () => {
-    try {
-      const apk = await getDownload(repo.title);
-      window.open(apk.download_url, "_blank");
-    } catch (err) {
-      console.error("Download failed:", err);
-      alert("Download failed");
-    }
-  };
+    getDownload(repo.title)
+      .then(setAssets)
+      .catch((error) => console.error("Failed to load downloads:", error))
+      .finally(() => setDownloadLoading(false));
+  }, [repo.title]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -112,9 +201,10 @@ function Page({ repo }: { repo: Repo }) {
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-              {repo.description}
-            </p>
+            <div
+              className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
+              dangerouslySetInnerHTML={{ __html: repo.readmeHtml || repo.description }}
+            />
 
             {/* Feature highlights */}
             <div className="flex flex-wrap gap-3 pt-4">
@@ -173,15 +263,24 @@ function Page({ repo }: { repo: Repo }) {
                 Download now and join our mission to equip the future
               </p>
 
-              <button
-                aria-label="download button"
-                onClick={handleDownload}
-                className="group relative inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-vibrant-purple to-vibrant-pink text-white rounded-xl font-mono text-lg font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
-              >
-                <Download className="w-6 h-6 group-hover:animate-bounce-subtle" />
-                Download Now
-                <div className="absolute inset-0 bg-gradient-to-r from-vibrant-pink to-vibrant-amber opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300 -z-10" />
-              </button>
+              {downloadLoading ? (
+                <Loading text="loading downloads" size="small" />
+              ) : assets.length ? (
+                <div className="flex flex-wrap justify-center gap-3">
+                  {assets.map((asset) => (
+                    <a
+                      key={asset.id}
+                      href={asset.download_url}
+                      className="group inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-vibrant-purple to-vibrant-pink text-white rounded-xl font-mono font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                    >
+                      <Download className="w-5 h-5 group-hover:animate-bounce-subtle" />
+                      Download {asset.name}
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-muted-foreground">No MSI, EXE, or APK release found.</p>
+              )}
 
               {/* Trust indicators */}
               <div className="mt-10 flex flex-wrap justify-center gap-8 text-muted-foreground">

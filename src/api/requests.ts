@@ -1,5 +1,19 @@
 const URL = "/.netlify/functions";
 
+export type Product = {
+  id: number;
+  title: string;
+  description: string;
+  repository_url: string;
+  public: boolean;
+  status: "active" | "inactive";
+  contributors: number;
+  stars: number;
+  forks: number;
+  language: string;
+  readmeHtml: string;
+};
+
 export async function heathCheck(): Promise<[boolean, string]> {
   const response = await fetch(`${URL}/heathcheck`);
 
@@ -52,6 +66,14 @@ export async function getOrgMetaData() {
   }
 
   return response.json() as Promise<OrgMetaData & { message: string }>;
+}
+
+export async function getProducts(): Promise<Product[]> {
+  const response = await fetch(`${URL}/getProducts`);
+
+  if (!response.ok) throw new Error(response.statusText);
+
+  return (await response.json()).products as Product[];
 }
 
 export type User = {
@@ -202,11 +224,19 @@ export async function getWithAuth<T>(
   }
 }
 
-// requests.ts
-export async function getDownload(title: string) {
-  const response = await fetch(`/.netlify/functions/getDownload?title=${title}`);
+export type DownloadAsset = {
+  id: number;
+  name: string;
+  size: number;
+  content_type: string;
+  download_url: string;
+};
+
+export async function getDownload(title: string): Promise<DownloadAsset[]> {
+  const response = await fetch(
+    `/.netlify/functions/getDownload?title=${encodeURIComponent(title)}`
+  );
   if (!response.ok) throw new Error(response.statusText);
 
-  // returns { name, size, download_url }
-  return await response.json();
+  return (await response.json()).assets as DownloadAsset[];
 }

@@ -9,8 +9,8 @@ import RootLayout from "./RootLayout";
 import Home from "./pages/home/Page";
 import Loading from "./ui/Loading";
 
-const LoginPage = lazy(() => import("./pages/login/Page"));
-const DashboardPage = lazy(() => import("./pages/dashboard/Page"));
+// const LoginPage = lazy(() => import("./pages/login/Page"));
+// const DashboardPage = lazy(() => import("./pages/dashboard/Page"));
 const Products = lazy(() => import("./pages/products/Page"));
 const AboutPage = lazy(() => import("./pages/about/Page"));
 const PrivacyPage = lazy(() => import("./pages/privacy/Page"));
@@ -21,31 +21,33 @@ function RootRouteComponent() {
   return <RootLayout />;
 }
 
-function DashboardRouteComponent() {
-  return <DashboardPage />;
-}
+// function DashboardRouteComponent() {
+//   return <DashboardPage />;
+// }
 
 const rootRoute = createRootRoute({
   component: RootRouteComponent,
 });
 
 const indexRoute = createRoute({ getParentRoute: () => rootRoute, path: "/", component: Home });
-const loginRoute = createRoute({ getParentRoute: () => rootRoute, path: "/login", component: LoginPage });
-const dashboardRoute = createRoute({ getParentRoute: () => rootRoute, path: "/dashboard", component: DashboardRouteComponent });
+// const loginRoute = createRoute({ getParentRoute: () => rootRoute, path: "/login", component: LoginPage });
+// const dashboardRoute = createRoute({ getParentRoute: () => rootRoute, path: "/dashboard", component: DashboardRouteComponent });
 const aboutRoute = createRoute({ getParentRoute: () => rootRoute, path: "/about", component: AboutPage });
 const termsRoute = createRoute({ getParentRoute: () => rootRoute, path: "/terms", component: TermsPage });
 const privacyRoute = createRoute({ getParentRoute: () => rootRoute, path: "/privacy", component: PrivacyPage });
 const reviewFormRoute = createRoute({ getParentRoute: () => rootRoute, path: "/reviews/form/$token/$name", component: ReviewFormPage });
+const productsIndexRoute = createRoute({ getParentRoute: () => rootRoute, path: "/products", component: Products });
 const productsRoute = createRoute({ getParentRoute: () => rootRoute, path: "/$product", component: Products });
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  loginRoute,
-  dashboardRoute,
+  // loginRoute,
+  // dashboardRoute,
   aboutRoute,
   termsRoute,
   privacyRoute,
   reviewFormRoute,
+  productsIndexRoute,
   productsRoute,
 ]);
 
