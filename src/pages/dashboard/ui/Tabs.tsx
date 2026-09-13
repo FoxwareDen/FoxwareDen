@@ -21,7 +21,7 @@ function Tabs() {
                 : "bg-card text-foreground hover:bg-muted"
             }`}
           >
-            PROJECTS TABLE
+PRODUCTS TABLE
           </button>
           <button
             aria-label="form tab"
@@ -32,7 +32,7 @@ function Tabs() {
                 : "bg-card text-foreground hover:bg-muted"
             }`}
           >
-            NEW PROJECT
+ADD PRODUCT
           </button>
         </div>
 

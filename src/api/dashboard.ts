@@ -42,13 +42,15 @@ export async function createRepo(
   newData: Repo
 ) {
   try {
-    const { data, error } = await db.from("repos").insert({
-      ...newData
-    });
+    const { data, error } = await db
+      .from("repos")
+      .insert(newData)
+      .select()
+      .single();
 
     if (error) throw error;
 
-    return data;
+    return data as Repo & MetaData;
   } catch (error) {
     console.error("Failed to create,", error);
     return null;

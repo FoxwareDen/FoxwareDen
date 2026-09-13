@@ -4,6 +4,7 @@ import { createRepo, Repo, Status } from "../../../api/dashboard";
 
 function FormData() {
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
   // Form state
   const [formData, setFormData] = useState<Repo>({
     contributors: 0,
@@ -20,8 +21,14 @@ function FormData() {
     try {
       setLoading(true);
 
-      createRepo(formData);
+      const createdProduct = await createRepo(formData);
 
+      if (!createdProduct) {
+        setMessage("Unable to create product. Check the Supabase table and try again.");
+        return;
+      }
+
+      setMessage(`${createdProduct.title} was added to the products page.`);
       setFormData({
         contributors: 0,
         description: "",
@@ -40,7 +47,15 @@ function FormData() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold font-mono mb-6">CREATE NEW PROJECT</h2>
+      <h2 className="text-2xl font-bold font-mono mb-6">ADD PRODUCT</h2>
+      <p className="text-muted-foreground mb-6">
+        Add a product to Supabase and it will be available from its product page.
+      </p>
+      {message && (
+        <div className="mb-6 rounded-xl border border-vibrant-teal/40 bg-vibrant-teal/10 px-4 py-3 font-mono text-sm">
+          {message}
+        </div>
+      )}
 
       <form onSubmit={handleFormSubmit} className="space-y-6">
         {/* Project Name */}
@@ -49,7 +64,7 @@ function FormData() {
             htmlFor="projectName"
             className="block font-mono font-bold mb-2"
           >
-            PROJECT NAME *
+PRODUCT NAME *
           </label>
           <input
             type="text"
@@ -62,7 +77,7 @@ function FormData() {
               })
             }
             className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-transparent focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
-            placeholder="Enter project name"
+            placeholder="Enter product name"
             required
           />
         </div>
@@ -73,7 +88,7 @@ function FormData() {
             htmlFor="description"
             className="block font-mono font-bold mb-2"
           >
-            DESCRIPTION *
+PRODUCT DESCRIPTION *
           </label>
           <textarea
             id="description"
@@ -85,7 +100,7 @@ function FormData() {
               })
             }
             className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-transparent focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple min-h-[120px]"
-            placeholder="Describe your project"
+            placeholder="Describe your product"
             required
           />
         </div>
@@ -163,7 +178,7 @@ function FormData() {
         <div className="space-y-4 border border-foreground/10 rounded-xl p-4 bg-muted/30">
           <div>
             <label htmlFor="license" className="block font-mono font-bold mb-2">
-              Statius *
+              STATUS *
             </label>
             <select
               id="license"
@@ -204,7 +219,7 @@ function FormData() {
             type="submit"
             className="flex-1 py-3 rounded-xl bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white shadow-lg hover:shadow-vibrant-purple/25 hover:-translate-y-0.5 transition-all font-mono font-bold"
           >
-            CREATE PROJECT
+ADD PRODUCT
           </button>
         </div>
       </form>
