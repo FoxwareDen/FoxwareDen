@@ -1,5 +1,5 @@
 import { ArrowRight, Code, Users, Lightbulb, Target, Rocket, Heart } from "lucide-react";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 import Services from "../../ui/Services";
 
 export default function AboutPage() {

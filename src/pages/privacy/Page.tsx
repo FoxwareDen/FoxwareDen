@@ -1,11 +1,14 @@
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      <div className="absolute top-24 right-10 w-48 h-48 bg-vibrant-purple/10 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-40 left-10 w-40 h-40 bg-vibrant-teal/10 rounded-full blur-3xl animate-float [animation-delay:1s]" />
       {/* Main Content */}
       <main className="container mx-auto px-4 py-16">
         {/* Hero */}
         <div className="mb-16">
-          <div className="border-4 border-black dark:border-white p-8 rotate-1 bg-white dark:bg-black">
+          <div className="relative border border-foreground/10 p-8 md:p-12 rotate-1 bg-card rounded-2xl shadow-xl overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-vibrant-purple via-vibrant-teal to-vibrant-amber" />
             <h1 className="font-mono text-5xl md:text-7xl font-bold mb-4">
               PRIVACY
               <br />
@@ -18,11 +21,11 @@ export default function PrivacyPage() {
         {/* Privacy Content */}
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Section 1 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               1. INTRODUCTION
             </h2>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               FoxWareDen ("we," "our," or "us") is committed to protecting your
               privacy. This Privacy Policy explains how we collect, use,
               disclose, and safeguard your information when you visit our
@@ -36,11 +39,11 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 2 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               2. INFORMATION WE COLLECT
             </h2>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               We may collect information about you in a variety of ways. The
               information we may collect includes:
             </p>
@@ -48,7 +51,7 @@ export default function PrivacyPage() {
             <h3 className="font-mono text-xl font-bold mb-3 mt-6">
               Personal Data
             </h3>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               Personally identifiable information, such as your name, email
               address, and contact information, that you voluntarily give to us
               when you pay for our services or when you choose to participate in
@@ -58,7 +61,7 @@ export default function PrivacyPage() {
             {/* <h3 className="font-mono text-xl font-bold mb-3 mt-6">
               Derivative Data
             </h3>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               Information our servers automatically collect when you access the
               site, such as your IP address, browser type, operating system,
               access times, and the pages you have viewed directly before and
@@ -77,16 +80,16 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 3 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               3. USE OF YOUR INFORMATION
             </h2>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               Having accurate information about you permits us to provide you
               with a smooth, efficient, and customized experience. Specifically,
               we may use information collected about you via the site to:
             </p>
-            <ul className="list-none space-y-2 font-mono ml-4">
+            <ul className="list-none space-y-2 text-muted-foreground ml-4">
               <li className="before:content-['▪'] before:mr-2">
                 Create and manage your account
               </li>
@@ -116,11 +119,11 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 4 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               4. DISCLOSURE OF YOUR INFORMATION
             </h2>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               We may share information we have collected about you in certain
               situations. Your information may be disclosed as follows:
             </p>
@@ -128,7 +131,7 @@ export default function PrivacyPage() {
             <h3 className="font-mono text-xl font-bold mb-3 mt-6">
               By Law or to Protect Rights
             </h3>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               If we believe the release of information about you is necessary to
               respond to legal process, to investigate or remedy potential
               violations of our policies, or to protect the rights, property,
@@ -138,7 +141,7 @@ export default function PrivacyPage() {
             <h3 className="font-mono text-xl font-bold mb-3 mt-6">
               Third-Party Service Providers
             </h3>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               We may share your information with third parties that perform
               services for us or on our behalf, including payment processing,
               data analysis, email delivery, hosting services, customer service,
@@ -157,11 +160,11 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 5 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               5. SECURITY OF YOUR INFORMATION
             </h2>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               We use administrative, technical, and physical security measures
               to help protect your personal information. While we have taken
               reasonable steps to secure the personal information you provide to
@@ -171,11 +174,11 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 6 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               6. COOKIES AND TRACKING
             </h2>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               We may use cookies, web beacons, tracking pixels, and other
               tracking technologies on the site to help customize the site and
               improve your experience. When you access the site, your personal
@@ -190,7 +193,7 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 7 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               7. THIRD-PARTY WEBSITES
             </h2>
@@ -204,15 +207,15 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 8 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               8. YOUR DATA RIGHTS
             </h2>
-            <p className="font-mono leading-relaxed mb-4">
+            <p className="text-muted-foreground leading-relaxed mb-4">
               Depending on your location, you may have the following rights
               regarding your personal data:
             </p>
-            <ul className="list-none space-y-2 font-mono ml-4">
+            <ul className="list-none space-y-2 text-muted-foreground ml-4">
               <li className="before:content-['▪'] before:mr-2">
                 The right to access – You have the right to request copies of
                 your personal data
@@ -241,7 +244,7 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 9 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               9. CHILDREN'S PRIVACY
             </h2>
@@ -255,7 +258,7 @@ export default function PrivacyPage() {
           </section>
 
           {/* Section 10 */}
-          <section className="border-l-4 border-black dark:border-white pl-6">
+          <section className="border-l-2 border-vibrant-purple/50 pl-6">
             <h2 className="font-mono text-2xl font-bold mb-4">
               10. CHANGES TO THIS POLICY
             </h2>

@@ -1,47 +1,83 @@
 import { Context } from "@netlify/functions";
 
+const SUPPORTED_EXTENSIONS = [".msi", ".exe", ".apk"];
+
+type ReleaseAsset = {
+  id: number;
+  name: string;
+  size: number;
+  url: string;
+  content_type: string;
+};
+
+function json(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export default async (req: Request, context: Context): Promise<Response> => {
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const querys = new URLSearchParams(req.url.split("?")[1]);
+  const querys = new URL(req.url).searchParams;
 
   if (!GITHUB_TOKEN) {
-    return new Response(JSON.stringify({ message: "GITHUB_TOKEN is not set" }), { status: 500 });
+    return json({ message: "GITHUB_TOKEN is not set" }, 500);
   }
 
   const title = querys.get("title");
   if (!title) {
-    return new Response("", { status: 400, statusText: "url search param not included" });
+    return json({ message: "title search param not included" }, 400);
   }
 
-  const releaseRes = await fetch(`https://api.github.com/repos/FoxwareDen/${title}/releases/latest`, {
-    headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-      "User-Agent": "Netlify-Edge-Function",
-      Accept: "application/vnd.github+json",
-    },
-  });
+  const githubHeaders = {
+    Authorization: `Bearer ${GITHUB_TOKEN}`,
+    "User-Agent": "Netlify-Function",
+    Accept: "application/vnd.github+json",
+  };
+  const releaseRes = await fetch(
+    `https://api.github.com/repos/FoxwareDen/${encodeURIComponent(title)}/releases/latest`,
+    { headers: githubHeaders }
+  );
 
   if (!releaseRes.ok) {
     const text = await releaseRes.text();
-    return new Response(`GitHub release fetch failed: ${text}`, { status: releaseRes.status });
+    return json({ message: `GitHub release fetch failed: ${text}` }, releaseRes.status);
   }
 
-  const release = await releaseRes.json();
-  const apkAsset = release.assets.find((a: any) => a.name.endsWith(".apk"));
+  const release = (await releaseRes.json()) as { assets: ReleaseAsset[] };
+  const assets = release.assets.filter((asset) =>
+    SUPPORTED_EXTENSIONS.some((extension) => asset.name.toLowerCase().endsWith(extension))
+  );
+  const assetId = querys.get("asset");
 
-  if (!apkAsset) {
-    return new Response(JSON.stringify({ message: "No APK asset found" }), { status: 404 });
+  if (!assetId) {
+    return json({
+      assets: assets.map(({ id, name, size, content_type }) => ({
+        id,
+        name,
+        size,
+        content_type,
+        download_url: `/.netlify/functions/getDownload?title=${encodeURIComponent(title)}&asset=${id}`,
+      })),
+    });
   }
 
-  // Return only the APK info (browser_download_url) instead of the file
-  return new Response(JSON.stringify({
-    name: apkAsset.name,
-    size: apkAsset.size,
-    download_url: apkAsset.browser_download_url
-  }), {
+  const asset = assets.find(({ id }) => String(id) === assetId);
+  if (!asset) return json({ message: "Supported release asset not found" }, 404);
+
+  const assetRes = await fetch(asset.url, {
+    headers: { ...githubHeaders, Accept: "application/octet-stream" },
+  });
+  if (!assetRes.ok) return json({ message: "GitHub asset download failed" }, assetRes.status);
+
+  return new Response(assetRes.body, {
+    status: 200,
     headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*"
+      "Content-Type": asset.content_type || "application/octet-stream",
+      "Content-Disposition": `attachment; filename="${asset.name.replace(/[\"\r\n]/g, "_")}"`,
+      "Content-Length": String(asset.size),
+      "Cache-Control": "private, no-store",
     },
   });
 };

@@ -1,5 +1,5 @@
 import { ChevronRight } from "lucide-react";
-import { Link } from "react-router";
+import { Link } from "@tanstack/react-router";
 import ProjectCard from "./ProjectCard";
 import { type ProjectCardProps } from "./ProjectCard";
 import { useEffect, useState } from "react";

@@ -1,69 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   GitFork,
-  NotepadTextIcon,
-  LogOutIcon,
   Menu,
-  User2,
   X,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "@tanstack/react-router";
 import Alert from "./Alert";
 import { useOrg } from "../store/orgHook";
 import ThemeToggle from "./ThemeToggle";
-import { useUserSession } from "../store/auth";
-import { signOutUser } from "../api/db";
-import DropdownProps, { DropdownItem } from "./DropDown";
-import { getRepos } from "../api/dashboard";
 
 function Header() {
-  const navigate = useNavigate();
   const { orgData, loading } = useOrg();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { session, setSession } = useUserSession();
-  const [authenticated, setAuthenticated] = useState(false);
-  const [productRoutes, setProductRoutes] = useState<DropdownItem[]>([
-    { href: "/froxtrail", label: "Foxtrail" },
-  ]);
-
-  useEffect(() => {
-    const fetchRepos = async () => {
-      const results = (await getRepos())?.map((r) => ({
-        href: `/${r.title.toLocaleLowerCase()}`,
-        label: r.title,
-      }));
-
-      if (!results) return;
-
-      setProductRoutes(results);
-    };
-
-    fetchRepos();
-  }, []);
-
-  useEffect(() => {
-    if (session) {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
-    }
-  }, [session]);
-
-  const handleClickButton = async () => {
-    if (authenticated) {
-      navigate("/Dashboard");
-    } else {
-      navigate("/login");
-    }
-  };
-
-  const signOut = async () => {
-    const res = await signOutUser();
-    if (res) {
-      setSession(null);
-      navigate("/");
-    }
-  };
 
   return (
     <header className="w-full z-50 bg-background/80 backdrop-blur-md border-b border-foreground/10 sticky top-0">
@@ -76,7 +24,12 @@ function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
-          <DropdownProps label="Products" items={productRoutes} />
+          <Link
+            to="/products"
+            className="font-medium text-foreground hover:text-vibrant-purple transition-colors"
+          >
+            Products
+          </Link>
           <Link
             to="/about"
             className="font-medium text-foreground hover:text-vibrant-purple transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-vibrant-purple hover:after:w-full after:transition-all after:duration-300"
@@ -95,26 +48,7 @@ function Header() {
           >
             <GitFork className="h-5 w-5 text-foreground group-hover:text-vibrant-purple transition-colors" />
           </a>
-          <button
-            aria-label={authenticated ? "Dashboard link" : "Login link"}
-            className="h-10 w-10 rounded-lg border border-foreground/10 bg-background hover:bg-vibrant-teal/10 hover:border-vibrant-teal/30 flex items-center justify-center transition-all duration-300 group"
-            onClick={handleClickButton}
-          >
-            {authenticated ? (
-              <NotepadTextIcon className="h-5 w-5 text-foreground group-hover:text-vibrant-teal transition-colors" />
-            ) : (
-              <User2 className="h-5 w-5 text-foreground group-hover:text-vibrant-teal transition-colors" />
-            )}
-          </button>
-          {authenticated && (
-            <button
-              aria-label="log out button"
-              className="h-10 w-10 rounded-lg border border-foreground/10 bg-background hover:bg-vibrant-pink/10 hover:border-vibrant-pink/30 flex items-center justify-center transition-all duration-300 group"
-              onClick={signOut}
-            >
-              <LogOutIcon className="h-5 w-5 text-foreground group-hover:text-vibrant-pink transition-colors" />
-            </button>
-          )}
+          {/* Dashboard link disabled while the dashboard route is disabled. */}
         </div>
 
         {/* Mobile Navigation */}
@@ -150,11 +84,13 @@ function Header() {
                 >
                   Home
                 </Link>
-                <DropdownProps
-                  className="text-xl font-bold"
-                  items={productRoutes}
-                  label="PRODUCTS"
-                />
+                <Link
+                  to="/products"
+                  className="text-2xl font-medium text-foreground hover:text-vibrant-purple transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Products
+                </Link>
                 <Link
                   to="/about"
                   className="text-2xl font-medium text-foreground hover:text-vibrant-teal transition-colors"
@@ -185,39 +121,7 @@ function Header() {
                   <span>Toggle Theme</span>
                 </div>
 
-                <button
-                  aria-label={authenticated ? "Dashboard link" : "Login link"}
-                  className="w-full border border-foreground/10 rounded-lg h-14 flex items-center justify-center gap-2 hover:bg-vibrant-teal/10 hover:border-vibrant-teal/30 transition-all group"
-                  onClick={handleClickButton}
-                >
-                  {authenticated ? (
-                    <>
-                      <NotepadTextIcon className="h-5 w-5 group-hover:text-vibrant-teal transition-colors" />
-                      <span className="group-hover:text-vibrant-teal transition-colors">
-                        Dashboard
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <User2 className="h-5 w-5 group-hover:text-vibrant-teal transition-colors" />
-                      <span className="group-hover:text-vibrant-teal transition-colors">
-                        Login / Sign Up
-                      </span>
-                    </>
-                  )}
-                </button>
-                {authenticated && (
-                  <button
-                    aria-label="log out button"
-                    className="w-full border border-foreground/10 rounded-lg h-14 flex items-center justify-center gap-2 hover:bg-vibrant-pink/10 hover:border-vibrant-pink/30 transition-all group"
-                    onClick={signOut}
-                  >
-                    <LogOutIcon className="h-5 w-5 group-hover:text-vibrant-pink transition-colors" />
-                    <span className="group-hover:text-vibrant-pink transition-colors">
-                      Logout
-                    </span>
-                  </button>
-                )}
+                {/* Dashboard link disabled while the dashboard route is disabled. */}
               </div>
             </div>
           </div>

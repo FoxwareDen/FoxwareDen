@@ -45,7 +45,7 @@ export default function ClientSection() {
   return (
     <>
       {/* Client Portal Link Generator Section */}
-      <div className="border-4 border-black dark:border-white p-6 bg-white dark:bg-black">
+      <div className="border border-foreground/10 rounded-2xl p-6 bg-card shadow-xl">
         <h2 className="text-2xl font-bold font-mono mb-6">
           GENERATE CLIENT PORTAL LINK
         </h2>
@@ -70,7 +70,7 @@ export default function ClientSection() {
                     clientName: e.target.value,
                   })
                 }
-                className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+                className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-transparent focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
                 placeholder="Enter client name"
                 required
               />
@@ -94,7 +94,7 @@ export default function ClientSection() {
                     clientEmail: e.target.value,
                   })
                 }
-                className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+                className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-transparent focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
                 placeholder="client@example.com"
                 required
               />
@@ -119,7 +119,7 @@ export default function ClientSection() {
                     projectId: e.target.value,
                   })
                 }
-                className="w-full px-4 py-3 border-2 border-black dark:border-white bg-white dark:bg-black focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+                className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
                 required
               >
                 <option value="">Select project</option>
@@ -149,7 +149,7 @@ export default function ClientSection() {
                     expiresIn: e.target.value,
                   })
                 }
-                className="w-full px-4 py-3 border-2 border-black dark:border-white bg-white dark:bg-black focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+                className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-background focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
                 required
               >
                 <option value="1">1 Day</option>
@@ -164,7 +164,7 @@ export default function ClientSection() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white shadow-lg hover:shadow-vibrant-purple/25 hover:-translate-y-0.5 transition-all font-mono font-bold"
           >
             GENERATE PORTAL LINK
           </button>
@@ -172,7 +172,7 @@ export default function ClientSection() {
 
         {/* Generated Link Display */}
         {generatedLink && (
-          <div className="mt-6 p-4 border-2 border-black dark:border-white bg-[#FFD60A]">
+          <div className="mt-6 p-4 border border-vibrant-amber/40 rounded-xl bg-vibrant-amber/15">
             <p className="font-mono font-bold mb-2 text-black">
               GENERATED PORTAL LINK:
             </p>
@@ -181,11 +181,11 @@ export default function ClientSection() {
                 type="text"
                 value={generatedLink}
                 readOnly
-                className="flex-1 px-4 py-2 border-2 border-black bg-white text-black font-mono text-sm"
+                className="flex-1 px-4 py-2 rounded-lg border border-foreground/10 bg-background text-foreground font-mono text-sm"
               />
               <button
                 onClick={handleCopyLink}
-                className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold flex items-center gap-2"
+                className="px-4 py-2 rounded-lg bg-foreground text-background hover:bg-vibrant-purple transition-colors font-mono font-bold flex items-center gap-2"
               >
                 {linkCopied ? (
                   <>
