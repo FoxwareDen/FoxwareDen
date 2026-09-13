@@ -61,7 +61,7 @@ function FormData() {
                 title: e.target.value,
               })
             }
-            className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+            className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-transparent focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
             placeholder="Enter project name"
             required
           />
@@ -84,7 +84,7 @@ function FormData() {
                 description: e.target.value,
               })
             }
-            className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white min-h-[120px]"
+            className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-transparent focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple min-h-[120px]"
             placeholder="Describe your project"
             required
           />
@@ -105,7 +105,7 @@ function FormData() {
             onChange={(e) =>
               setFormData({ ...formData, repository_url: e.target.value })
             }
-            className="w-full px-4 py-3 border-2 border-black dark:border-white bg-transparent focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+            className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-transparent focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
             placeholder="https://github.com/username/repo"
             required
           />
@@ -126,7 +126,7 @@ function FormData() {
               onChange={(e) =>
                 setFormData({ ...formData, language: e.target.value })
               }
-              className="w-full px-4 py-3 border-2 border-black dark:border-white bg-white dark:bg-black focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+              className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-white dark:bg-black focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
               required
             >
               <option value="">Select language</option>
@@ -148,7 +148,7 @@ function FormData() {
               onChange={(e) =>
                 setFormData({ ...formData, license: e.target.value })
               }
-              className="w-full px-4 py-3 border-2 border-black dark:border-white bg-white dark:bg-black focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+              className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-white dark:bg-black focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
               required
             >
               <option value="MIT">MIT</option>
@@ -160,7 +160,7 @@ function FormData() {
         </div>
 
         {/* Switches */}
-        <div className="space-y-4 border-2 border-black dark:border-white p-4">
+        <div className="space-y-4 border border-foreground/10 rounded-xl p-4 bg-muted/30">
           <div>
             <label htmlFor="license" className="block font-mono font-bold mb-2">
               Statius *
@@ -174,7 +174,7 @@ function FormData() {
                   status: e.target.value as Status | "pending",
                 })
               }
-              className="w-full px-4 py-3 border-2 border-black dark:border-white bg-white dark:bg-black focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white"
+              className="w-full px-4 py-3 border border-foreground/10 rounded-xl bg-white dark:bg-black focus:outline-none focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
               required
             >
               <option value="active">active</option>
@@ -202,7 +202,7 @@ function FormData() {
             disabled={loading}
             aria-label="Form submission button"
             type="submit"
-            className="flex-1 py-3 bg-black text-white border-2 border-black hover:bg-white hover:text-black transition-colors font-mono font-bold dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white"
+            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white shadow-lg hover:shadow-vibrant-purple/25 hover:-translate-y-0.5 transition-all font-mono font-bold"
           >
             CREATE PROJECT
           </button>

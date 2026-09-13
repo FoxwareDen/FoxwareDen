@@ -2,12 +2,15 @@ import { ReactNode } from "react";
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      <div className="absolute top-24 right-10 w-48 h-48 bg-vibrant-amber/10 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-40 left-10 w-40 h-40 bg-vibrant-teal/10 rounded-full blur-3xl animate-float [animation-delay:1s]" />
       {/* Main Content */}
       <main className="container mx-auto px-4 py-16">
         {/* Hero */}
         <div className="mb-16">
-          <div className="border-4 border-black dark:border-white p-8 -rotate-1 bg-white dark:bg-black">
+          <div className="relative border border-foreground/10 p-8 md:p-12 -rotate-1 bg-card rounded-2xl shadow-xl overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-vibrant-teal via-vibrant-amber to-vibrant-pink" />
             <h1 className="font-mono text-5xl md:text-7xl font-bold mb-4">
               TERMS OF
               <br />
@@ -77,7 +80,7 @@ function TermsSection({
   children?: ReactNode | string;
 }) {
   return (
-    <section className="border-l-4 border-black dark:border-white pl-6">
+    <section className="border-l-2 border-vibrant-teal/50 pl-6">
       <h2 className="font-mono text-2xl font-bold mb-4">{heading}</h2>
       {children}
     </section>
@@ -85,7 +88,7 @@ function TermsSection({
 }
 
 function TermsParagraph({ children }: { children: string }) {
-  return <p className="font-mono leading-relaxed mb-4">{children}</p>;
+  return <p className="text-muted-foreground leading-relaxed mb-4">{children}</p>;
 }
 
 type TermItem = string | TermItem[];
@@ -98,7 +101,7 @@ function TermsList({
   list: TermItem[];
 }) {
   return (
-    <div className=" space-y-2 font-mono">
+    <div className="space-y-2 text-muted-foreground">
       {list.map((item, i) => (
         <>
           {typeof item === "string" ? (

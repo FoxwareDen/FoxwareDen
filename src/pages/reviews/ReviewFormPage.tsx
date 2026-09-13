@@ -92,11 +92,13 @@ export default function ReviewFormPage() {
         </div>
       ) : (
         <>
-          <div className="min-h-screen bg-white dark:bg-black">
+          <div className="min-h-screen bg-background relative overflow-hidden">
+            <div className="absolute top-24 left-10 w-40 h-40 bg-vibrant-purple/10 rounded-full blur-3xl animate-float" />
+            <div className="absolute bottom-24 right-10 w-48 h-48 bg-vibrant-teal/10 rounded-full blur-3xl animate-float [animation-delay:1s]" />
             {/* Hero Section */}
             <section className="py-16 relative overflow-hidden">
               <div className="container mx-auto px-4">
-                <div className="max-w-2xl mx-auto text-center transform -rotate-1 border-4 border-black dark:border-white p-8 bg-white dark:bg-black">
+                <div className="relative max-w-2xl mx-auto text-center transform -rotate-1 border border-foreground/10 p-8 md:p-12 bg-card rounded-2xl shadow-xl overflow-hidden">
                   <h1 className="text-5xl md:text-7xl font-bold font-mono mb-4">
                     SUBMIT REVIEW
                   </h1>
@@ -117,7 +119,7 @@ export default function ReviewFormPage() {
                 <div className="max-w-2xl mx-auto">
                   <form onSubmit={handleSubmit} className="space-y-8">
                     {/* Rating */}
-                    <div className="border-4 border-black dark:border-white p-6 bg-white dark:bg-black">
+                    <div className="border border-foreground/10 p-6 bg-card rounded-2xl shadow-sm">
                       <label className="block font-mono font-bold text-lg mb-4">
                         RATING *
                       </label>
@@ -129,7 +131,7 @@ export default function ReviewFormPage() {
                             onClick={() => setRating(star)}
                             onMouseEnter={() => setHoveredRating(star)}
                             onMouseLeave={() => setHoveredRating(0)}
-                            className="p-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                            className="p-2 border border-foreground/10 rounded-lg text-vibrant-amber hover:bg-vibrant-amber hover:text-white transition-colors"
                           >
                             <Star
                               size={32}
@@ -149,7 +151,7 @@ export default function ReviewFormPage() {
                     </div>
 
                     {/* Description */}
-                    <div className="border-4 border-black dark:border-white p-6 bg-white dark:bg-black">
+                    <div className="border border-foreground/10 p-6 bg-card rounded-2xl shadow-sm">
                       <label
                         htmlFor="description"
                         className="block font-mono font-bold text-lg mb-4"
@@ -162,13 +164,13 @@ export default function ReviewFormPage() {
                         onChange={(e) => setDescription(e.target.value)}
                         required
                         rows={6}
-                        className="w-full border-2 border-black dark:border-white p-4 font-mono bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:ring-4 focus:ring-black dark:focus:ring-white"
+                        className="w-full border border-foreground/10 rounded-xl p-4 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
                         placeholder="Share your detailed experience..."
                       />
                     </div>
 
                     {/* Optional Name */}
-                    <div className="border-4 border-black dark:border-white p-6 bg-white dark:bg-black">
+                    <div className="border border-foreground/10 p-6 bg-card rounded-2xl shadow-sm">
                       <label
                         htmlFor="name"
                         className="block font-mono font-bold text-lg mb-4"
@@ -180,7 +182,7 @@ export default function ReviewFormPage() {
                         type="text"
                         value={reviewerName}
                         onChange={(e) => setReviewerName(e.target.value)}
-                        className="w-full border-2 border-black dark:border-white p-4 font-mono bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:ring-4 focus:ring-black dark:focus:ring-white"
+                        className="w-full border border-foreground/10 rounded-xl p-4 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-vibrant-purple/50 focus:border-vibrant-purple"
                         placeholder="Your name (leave blank for anonymous)"
                       />
                     </div>
@@ -245,7 +247,7 @@ export default function ReviewFormPage() {
                       disabled={
                         rating === 0 || !description.trim() || submitted
                       }
-                      className="w-full p-6 border-4 border-black dark:border-white font-mono font-bold text-2xl hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-black dark:disabled:hover:bg-black dark:disabled:hover:text-white"
+                      className="w-full p-4 rounded-xl bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white font-mono font-bold text-xl shadow-lg hover:shadow-vibrant-purple/25 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {submitted ? "✓ SUBMITTED" : "SUBMIT REVIEW"}
                     </button>

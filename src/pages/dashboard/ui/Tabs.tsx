@@ -10,15 +10,15 @@ function Tabs() {
   return (
     <>
       {" "}
-      <div className="border-4 border-black dark:border-white mb-0 bg-white dark:bg-black">
-        <div className="flex border-b-4 border-black dark:border-white">
+      <div className="border border-foreground/10 mb-0 bg-card rounded-2xl shadow-xl overflow-hidden">
+        <div className="flex border-b border-foreground/10">
           <button
             aria-label="table tab"
             onClick={() => setActiveTab("table")}
-            className={`flex-1 px-6 py-4 font-mono font-bold transition-colors border-r-4 border-black dark:border-white ${
+            className={`flex-1 px-6 py-4 font-mono font-bold transition-colors border-r border-foreground/10 ${
               activeTab === "table"
-                ? "bg-black text-white dark:bg-white dark:text-black"
-                : "bg-white text-black dark:bg-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800"
+                ? "bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white"
+                : "bg-card text-foreground hover:bg-muted"
             }`}
           >
             PROJECTS TABLE
@@ -28,8 +28,8 @@ function Tabs() {
             onClick={() => setActiveTab("form")}
             className={`flex-1 px-6 py-4 font-mono font-bold transition-colors ${
               activeTab === "form"
-                ? "bg-black text-white dark:bg-white dark:text-black"
-                : "bg-white text-black dark:bg-black dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-800"
+                ? "bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white"
+                : "bg-card text-foreground hover:bg-muted"
             }`}
           >
             NEW PROJECT

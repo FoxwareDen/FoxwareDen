@@ -56,10 +56,10 @@ function Table() {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto border-2 border-black dark:border-white">
+      <div className="overflow-x-auto border border-foreground/10 rounded-xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="bg-black text-white dark:bg-white dark:text-black">
+            <tr className="bg-gradient-to-r from-vibrant-purple to-vibrant-teal text-white">
               <th className="px-4 py-3 text-left font-mono font-bold border-r-2 border-white dark:border-black">
                 PROJECT
               </th>
@@ -83,40 +83,40 @@ function Table() {
                 key={project.id}
                 className={`${
                   index % 2 === 0
-                    ? "bg-white dark:bg-black"
-                    : "bg-gray-100 dark:bg-zinc-800"
-                } border-t-2 border-black dark:border-white`}
+                    ? "bg-card"
+                    : "bg-muted/40"
+                } border-t border-foreground/10`}
               >
-                <td className="px-4 py-3 font-mono font-bold border-r-2 border-black dark:border-white">
+                <td className="px-4 py-3 font-mono font-bold border-r border-foreground/10">
                   {project.title}
                 </td>
-                <td className="px-4 py-3 border-r-2 border-black dark:border-white">
+                <td className="px-4 py-3 border-r border-foreground/10">
                   <span
                     className={`inline-block px-3 py-1 ${getStatusColor(
                       project.status
-                    )} text-black font-mono font-bold text-sm border-2 border-black`}
+                    )} text-foreground font-mono font-bold text-sm rounded-full px-3 py-1`}
                   >
                     {project.status.toUpperCase()}
                   </span>
                 </td>
-                <td className="px-4 py-3 font-mono border-r-2 border-black dark:border-white">
+                <td className="px-4 py-3 font-mono border-r border-foreground/10">
                   {project.contributors}
                 </td>
-                {/* <td className="px-4 py-3 font-mono border-r-2 border-black dark:border-white">
+                {/* <td className="px-4 py-3 font-mono border-r border-foreground/10">
                   {project.``}
                 </td> */}
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
                     <button
                       aria-label="edit content button"
-                      className="p-2 border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors"
+                      className="p-2 rounded-lg border border-foreground/10 hover:bg-vibrant-purple hover:text-white transition-colors"
                     >
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
                       aria-label="delete content button"
                       // onClick={() => handleDelete(project.id)}
-                      className="p-2 border-2 border-black dark:border-white hover:bg-[#FF5252] hover:text-black hover:border-black transition-colors"
+                      className="p-2 rounded-lg border border-foreground/10 hover:bg-vibrant-coral hover:text-white transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -130,17 +130,17 @@ function Table() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-        <div className="border-4 border-black dark:border-white p-4 bg-white dark:bg-black">
+        <div className="border border-foreground/10 rounded-xl p-4 bg-card shadow-sm">
           <p className="font-mono text-sm mb-1">TOTAL PROJECTS</p>
           <p className="text-3xl font-bold font-mono">{projects.length}</p>
         </div>
-        <div className="border-4 border-black dark:border-white p-4 bg-white dark:bg-black">
+        <div className="border border-foreground/10 rounded-xl p-4 bg-card shadow-sm">
           <p className="font-mono text-sm mb-1">ACTIVE</p>
           <p className="text-3xl font-bold font-mono">
             {projects.filter((p) => p.status === "active").length}
           </p>
         </div>
-        <div className="border-4 border-black dark:border-white p-4 bg-white dark:bg-black">
+        <div className="border border-foreground/10 rounded-xl p-4 bg-card shadow-sm">
           <p className="font-mono text-sm mb-1">TOTAL CONTRIBUTORS</p>
           <p className="text-3xl font-bold font-mono">
             {projects.reduce((sum, p) => sum + p.contributors, 0)}
