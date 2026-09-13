@@ -105,13 +105,19 @@ function ProductIndex({
             <div className="relative flex flex-1 flex-col">
               <div className="mb-5">
                 <span className="inline-block rounded-full bg-vibrant-teal px-4 py-2 font-mono text-xs font-bold uppercase tracking-wide text-white shadow-lg">
-                {product.status}
+                  Status: {product.status}
                 </span>
               </div>
 
               <h2 className="mb-4 text-4xl font-bold leading-tight font-mono text-transparent bg-gradient-to-r from-vibrant-purple via-vibrant-pink to-vibrant-amber bg-clip-text transition-transform group-hover:scale-[1.02]">
                 {product.title}
               </h2>
+
+              {product.release_tag && (
+                <p className="mb-3 font-mono text-xs font-bold uppercase tracking-widest text-vibrant-purple">
+                  Release {product.release_tag}
+                </p>
+              )}
 
               <p className="line-clamp-3 text-base leading-6 text-muted-foreground">
                 {getShortDescription(product.description)}
@@ -159,7 +165,7 @@ function Page({ repo }: { repo: Product }) {
   const colors: Record<Product["status"], string> = {
     active: "bg-vibrant-teal text-white",
     inactive: "bg-vibrant-pink text-white",
-    pending: "bg-vibrant-amber text-white",
+    // pending: "bg-vibrant-amber text-white",
   };
 
   const { statusColor } = useMemo(
@@ -200,6 +206,12 @@ function Page({ repo }: { repo: Product }) {
                 {repo.title}
               </span>
             </h1>
+
+            {repo.release_tag && (
+              <p className="font-mono text-sm font-bold uppercase tracking-widest text-vibrant-purple">
+                Latest release: {repo.release_tag}
+              </p>
+            )}
 
             <div
               className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground"
@@ -264,7 +276,7 @@ function Page({ repo }: { repo: Product }) {
               </p>
 
               {downloadLoading ? (
-                <Loading text="loading downloads" size="small" />
+                <Loading text="loading downloads" size="lg" />
               ) : assets.length ? (
                 <div className="flex flex-wrap justify-center gap-3">
                   {assets.map((asset) => (

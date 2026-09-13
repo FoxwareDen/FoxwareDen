@@ -19,6 +19,10 @@ type GithubRepo = {
   topics: string[];
 };
 
+type GithubRelease = {
+  tag_name: string;
+};
+
 function githubHeaders(token: string, accept = "application/vnd.github+json") {
   return {
     Authorization: `Bearer ${token}`,
@@ -59,6 +63,17 @@ export const handler: Handler = async () => {
           (repo) => repo.topics.some((topic) => topic === "release")
         )
         .map(async (repo) => {
+        let releaseTag: string | null = null;
+        const releaseResponse = await fetch(
+          `${GITHUB_API}/repos/${ORGANIZATION}/${encodeURIComponent(repo.name)}/releases/latest`,
+          { headers: githubHeaders(token) }
+        );
+
+        if (releaseResponse.ok) {
+          const release = (await releaseResponse.json()) as GithubRelease;
+          releaseTag = release.tag_name;
+        }
+
         let readme = "";
         const readmeResponse = await fetch(
           `${GITHUB_API}/repos/${ORGANIZATION}/${encodeURIComponent(repo.name)}/readme`,
@@ -97,6 +112,7 @@ export const handler: Handler = async () => {
           forks: repo.forks_count,
           language: repo.language || "Unknown",
           readmeHtml,
+          release_tag: releaseTag,
         };
         })
     );

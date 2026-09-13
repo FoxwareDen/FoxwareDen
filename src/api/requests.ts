@@ -12,6 +12,7 @@ export type Product = {
   forks: number;
   language: string;
   readmeHtml: string;
+  release_tag: string | null;
 };
 
 export async function heathCheck(): Promise<[boolean, string]> {
