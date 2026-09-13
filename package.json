@@ -12,6 +12,8 @@
   "dependencies": {
     "@netlify/functions": "^3.0.4",
     "@supabase/supabase-js": "^2.75.1",
+    "@tanstack/react-router": "^1.170.35",
+    "@tanstack/router-devtools": "^1.167.1",
     "lucide-react": "^0.487.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

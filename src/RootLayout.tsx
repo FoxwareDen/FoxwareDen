@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet } from "@tanstack/react-router";
 import Header from "./ui/Header";
 import Footer from "./ui/Footer";
 import { ThemeProvider } from "./lib/ThemeProvider";

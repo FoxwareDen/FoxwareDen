@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams } from "@tanstack/react-router";
 import {
   createReview,
   invalidateReviewPortal,
@@ -10,7 +10,7 @@ import ErrorSection from "../../ui/ErrorSection";
 import { Star } from "lucide-react";
 
 export default function ReviewFormPage() {
-  const { token, name } = useParams();
+  const { token, name } = useParams({ strict: false });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<{
     message: string;

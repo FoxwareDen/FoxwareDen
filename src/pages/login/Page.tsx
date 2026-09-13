@@ -1,7 +1,7 @@
 import type React from "react";
 
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { getAllowedList, signInWithEmail, signUpWithEmail } from "../../api/db";
 import BrutalistSwitch from "../../ui/Switch";
@@ -61,7 +61,7 @@ function LoginPage() {
 
     setSession(session);
 
-    navigate("/dashboard");
+    navigate({ to: "/dashboard" });
   };
 
   return (

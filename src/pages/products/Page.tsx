@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "@tanstack/react-router";
 import { getRepos, Repo, Status } from "../../api/dashboard";
 import Loading from "../../ui/Loading";
 import NotFound from "../404/Page";

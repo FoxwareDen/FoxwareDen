@@ -7,7 +7,7 @@ import {
   User2,
   X,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import Alert from "./Alert";
 import { useOrg } from "../store/orgHook";
 import ThemeToggle from "./ThemeToggle";
@@ -51,9 +51,9 @@ function Header() {
 
   const handleClickButton = async () => {
     if (authenticated) {
-      navigate("/Dashboard");
+      navigate({ to: "/Dashboard" });
     } else {
-      navigate("/login");
+      navigate({ to: "/login" });
     }
   };
 
@@ -61,7 +61,7 @@ function Header() {
     const res = await signOutUser();
     if (res) {
       setSession(null);
-      navigate("/");
+      navigate({ to: "/" });
     }
   };
 
