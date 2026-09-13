@@ -2,17 +2,13 @@ import { useEffect, useState } from "react";
 import {
   GitFork,
   NotepadTextIcon,
-  LogOutIcon,
   Menu,
-  User2,
   X,
 } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import Alert from "./Alert";
 import { useOrg } from "../store/orgHook";
 import ThemeToggle from "./ThemeToggle";
-import { useUserSession } from "../store/auth";
-import { signOutUser } from "../api/db";
 import DropdownProps, { DropdownItem } from "./DropDown";
 import { getRepos } from "../api/dashboard";
 
@@ -20,8 +16,6 @@ function Header() {
   const navigate = useNavigate();
   const { orgData, loading } = useOrg();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { session, setSession } = useUserSession();
-  const [authenticated, setAuthenticated] = useState(false);
   const [productRoutes, setProductRoutes] = useState<DropdownItem[]>([
     { href: "/froxtrail", label: "Foxtrail" },
   ]);
@@ -41,28 +35,8 @@ function Header() {
     fetchRepos();
   }, []);
 
-  useEffect(() => {
-    if (session) {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
-    }
-  }, [session]);
-
-  const handleClickButton = async () => {
-    if (authenticated) {
-      navigate({ to: "/Dashboard" });
-    } else {
-      navigate({ to: "/login" });
-    }
-  };
-
-  const signOut = async () => {
-    const res = await signOutUser();
-    if (res) {
-      setSession(null);
-      navigate({ to: "/" });
-    }
+  const handleClickButton = () => {
+    navigate({ to: "/dashboard" });
   };
 
   return (
@@ -96,25 +70,12 @@ function Header() {
             <GitFork className="h-5 w-5 text-foreground group-hover:text-vibrant-purple transition-colors" />
           </a>
           <button
-            aria-label={authenticated ? "Dashboard link" : "Login link"}
+            aria-label="Dashboard link"
             className="h-10 w-10 rounded-lg border border-foreground/10 bg-background hover:bg-vibrant-teal/10 hover:border-vibrant-teal/30 flex items-center justify-center transition-all duration-300 group"
             onClick={handleClickButton}
           >
-            {authenticated ? (
-              <NotepadTextIcon className="h-5 w-5 text-foreground group-hover:text-vibrant-teal transition-colors" />
-            ) : (
-              <User2 className="h-5 w-5 text-foreground group-hover:text-vibrant-teal transition-colors" />
-            )}
+            <NotepadTextIcon className="h-5 w-5 text-foreground group-hover:text-vibrant-teal transition-colors" />
           </button>
-          {authenticated && (
-            <button
-              aria-label="log out button"
-              className="h-10 w-10 rounded-lg border border-foreground/10 bg-background hover:bg-vibrant-pink/10 hover:border-vibrant-pink/30 flex items-center justify-center transition-all duration-300 group"
-              onClick={signOut}
-            >
-              <LogOutIcon className="h-5 w-5 text-foreground group-hover:text-vibrant-pink transition-colors" />
-            </button>
-          )}
         </div>
 
         {/* Mobile Navigation */}
@@ -186,38 +147,15 @@ function Header() {
                 </div>
 
                 <button
-                  aria-label={authenticated ? "Dashboard link" : "Login link"}
+                  aria-label="Dashboard link"
                   className="w-full border border-foreground/10 rounded-lg h-14 flex items-center justify-center gap-2 hover:bg-vibrant-teal/10 hover:border-vibrant-teal/30 transition-all group"
                   onClick={handleClickButton}
                 >
-                  {authenticated ? (
-                    <>
-                      <NotepadTextIcon className="h-5 w-5 group-hover:text-vibrant-teal transition-colors" />
-                      <span className="group-hover:text-vibrant-teal transition-colors">
-                        Dashboard
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <User2 className="h-5 w-5 group-hover:text-vibrant-teal transition-colors" />
-                      <span className="group-hover:text-vibrant-teal transition-colors">
-                        Login / Sign Up
-                      </span>
-                    </>
-                  )}
+                  <NotepadTextIcon className="h-5 w-5 group-hover:text-vibrant-teal transition-colors" />
+                  <span className="group-hover:text-vibrant-teal transition-colors">
+                    Dashboard
+                  </span>
                 </button>
-                {authenticated && (
-                  <button
-                    aria-label="log out button"
-                    className="w-full border border-foreground/10 rounded-lg h-14 flex items-center justify-center gap-2 hover:bg-vibrant-pink/10 hover:border-vibrant-pink/30 transition-all group"
-                    onClick={signOut}
-                  >
-                    <LogOutIcon className="h-5 w-5 group-hover:text-vibrant-pink transition-colors" />
-                    <span className="group-hover:text-vibrant-pink transition-colors">
-                      Logout
-                    </span>
-                  </button>
-                )}
               </div>
             </div>
           </div>
